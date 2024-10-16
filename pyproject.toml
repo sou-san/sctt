@@ -30,10 +30,10 @@ target-version = "py312"
 [tool.ruff.lint]
 select = [
     "F", # Pyflakes
-    "B", # Black
+    "B", # flake8-bugbear
     "I", # isort
-    "E", # error
-    "W", # warning
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
     "N", # 名前チェック
     "Q", # シグネチャに型情報を必須にする
     "C901", # mccabe linter (複雑度チェック)
