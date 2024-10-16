@@ -1,1 +1,1 @@
-# SpeedCubeTimer (sctt)
+# SpeedCubeTimer-TUI (sctt)
