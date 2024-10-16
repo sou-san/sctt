@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "sou-san", email = "sou887867@gmail.com" } 
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = []
 
 [project.scripts]
@@ -21,4 +21,25 @@ dev-dependencies = [
     "mypy>=1.12.0",
     "ruff>=0.6.9",
     "textual-dev>=1.6.1",
+]
+
+[tool.ruff]
+line-length = 90
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "F", # Pyflakes
+    "B", # Black
+    "I", # isort
+    "E", # error
+    "W", # warning
+    "N", # 名前チェック
+    "Q", # シグネチャに型情報を必須にする
+    "C901", # mccabe linter (複雑度チェック)
+]
+
+ignore = [
+    "D103", # docstring が無い関数やクラスを許す
+    "E501", # 行あたりの文字数制限を無視する
 ]
