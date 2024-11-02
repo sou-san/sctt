@@ -1,16 +1,24 @@
 [project]
 name = "sctt"
 version = "0.1.0"
-description = "SpeedCubeTimer-TUI"
+description = "SpeedCubeTimer-TUI (sctt)"
 readme = "README.md"
 authors = [
     { name = "sou-san", email = "sou887867@gmail.com" } 
 ]
 requires-python = ">=3.12"
+license = { file = "LICENSE" }
+keywords = ["sctt", "speed cube timer", "scrambler", "cli", "tui", "terminal", "tool"]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/sou-san/sctt"
+Repository = "https://github.com/sou-san/sctt"
+Issues = "https://github.com/sou-san/sctt/issues"
+Documentation = "https://github.com/sou-san/sctt/blob/main/README.md"
+
 [project.scripts]
-sctt = "sctt:main"
+sctt = "sctt.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -34,8 +42,7 @@ select = [
     "I", # isort
     "E", # pycodestyle errors
     "W", # pycodestyle warnings
-    "N", # 名前チェック
-    "Q", # シグネチャに型情報を必須にする
+    "N", # pep8-naming
     "C901", # mccabe linter (複雑度チェック)
 ]
 
