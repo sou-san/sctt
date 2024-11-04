@@ -9,7 +9,11 @@ authors = [
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
 keywords = ["sctt", "speed cube timer", "scrambler", "cli", "tui", "terminal", "tool"]
-dependencies = []
+dependencies = [
+    "textual>=0.85.2",
+    "textual-pyfiglet==0.5.0",
+    "keyboard>=0.13.5",
+]
 
 [project.urls]
 Homepage = "https://github.com/sou-san/sctt"
