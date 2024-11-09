@@ -1,0 +1,69 @@
+* {
+    scrollbar-size: 1 1;
+    scrollbar-background: #000;
+    scrollbar-background-active: #000;
+    scrollbar-background-hover: #000;
+    scrollbar-color: gray;
+    scrollbar-color-active: #0f0 80%;
+    scrollbar-color-hover: gray;
+}
+
+Screen {
+    align: center middle;
+    padding: 1 2;
+}
+
+ModalScreen {
+    background: $background;
+}
+
+VerticalScroll {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+Footer {
+    background: $background 10%;
+
+    FooterKey {
+        background: $background 10%;
+        padding-left: 1;
+
+        .footer-key--key {
+            color: #0f0 80%;
+            background: $background 10%;
+        }
+    }
+}
+
+
+# バックエンドの処理などがまだできていないため、コメントアウトしている。
+# StatusWidget {
+#     width: 0.3fr;
+#     height: 1fr;
+#     border: round #0f0 80%;
+# }
+
+ScrambleWidget {
+    content-align: center middle;
+    width: 1fr;
+    height: 5;
+    border: round #0f0 80%;
+    padding: 0 1;
+}
+
+TimerWidget {
+    content-align: center middle;
+    width: 1fr;
+    height: 11;
+    border: round #0f0 80%;
+}
+
+CubeNetWidget {
+    content-align: center middle;
+    width: 1fr;
+    height: 1fr;
+    border: round #0f0 80%;
+}
