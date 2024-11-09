@@ -24,8 +24,15 @@ class TimerWidget(Static):
         self.timer = Timer()
 
     def on_mount(self) -> None:
-        keyboard.hook(self.key_events)
-        self.set_interval(1 / 60, self.set_time)
+        try:
+            keyboard.hook(self.key_events)
+        except ImportError:
+            self.app.exit(
+                return_code=13,
+                message="You must be root to use sctt on linux.\n\nsudo -E $(which sctt)",
+            )
+        else:
+            self.set_interval(1 / 60, self.set_time)
 
     def set_time(self) -> None:
         self.time = figlet_format(
