@@ -118,9 +118,7 @@ class Cube:
 
     def _rotate_face_clockwise(self, face: str) -> None:
         # 指定された面を時計回りに回転させる
-        self.faces[face] = [
-            list(row) for row in zip(*self.faces[face][::-1], strict=True)
-        ]
+        self.faces[face] = [list(row) for row in zip(*self.faces[face][::-1], strict=True)]
 
     def _move_u(self) -> None:
         # U 面を時計回り回転
