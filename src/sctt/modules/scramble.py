@@ -32,29 +32,30 @@ def generate_scramble(cube_size: CUBE_SIZE_VARIANT = 3) -> str:
     # 方向(時計回り 90 度回転、反時計回り 90 度回転、180 度回転)
     # 180度回転 (U2 など) の確率を上げるために "2" を2つ設定
     modifiers: tuple[str, ...] = ("", "'", "2", "2")
+    scramble_length: int
 
     match cube_size:
         case 2:
-            scramble_length: int = 10
+            scramble_length = 10
             moves.remove("L")
             moves.remove("D")
             moves.remove("B")
         case 3:
-            scramble_length: int = 20
+            scramble_length = 20
         case 4:
-            scramble_length: int = 45
+            scramble_length = 45
             moves.append("Uw")
             moves.append("Rw")
             moves.append("Fw")
         case 5:
-            scramble_length: int = 60
+            scramble_length = 60
             moves.extend(_generate_2_layer_turn_moves(moves))
         case 6:
-            scramble_length: int = 80
+            scramble_length = 80
             moves.extend(_generate_2_layer_turn_moves(moves))
             moves.extend(_generate_3_layer_turn_moves(moves))
         case 7:
-            scramble_length: int = 100
+            scramble_length = 100
             moves.extend(_generate_2_layer_turn_moves(moves))
             moves.extend(_generate_3_layer_turn_moves(moves))
         case _:
