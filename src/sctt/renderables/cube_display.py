@@ -64,7 +64,7 @@ class CubeDisplay:
         return 1 if self.sticker_style == "mini filled" else 2
 
     @property
-    def rendable_width(self) -> int:
+    def renderable_width(self) -> int:
         assert self.sticker_style in ("mini filled", "filled")
 
         match self.sticker_style:
@@ -74,7 +74,7 @@ class CubeDisplay:
                 return self.cube.size * self._sticker_width * 4 * 2
 
     @property
-    def rendable_height(self) -> int:
+    def renderable_height(self) -> int:
         assert self.sticker_style in ("mini filled", "filled")
 
         match self.sticker_style:
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     cube.apply_scramble(scramble)
     console.print(cube_display.generate_renderable_cube_net())
 
-    console.print(f"{cube_display.rendable_width} x {cube_display.rendable_height}")
+    console.print(f"{cube_display.renderable_width} x {cube_display.renderable_height}")
