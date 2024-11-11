@@ -17,9 +17,7 @@ class BlockingScreen(ModalScreen[None]):
         height: int = self.app.size.height
 
         with Center():
-            yield Label(
-                f"The app screen size must be at least {MIN_WIDTH}x{MIN_HEIGHT}\n"
-            )
+            yield Label(f"The app screen size must be at least {MIN_WIDTH}x{MIN_HEIGHT}\n")
         with Center():
             yield Label(f"Current app screen size: {width}x{height}")
         yield Footer()
