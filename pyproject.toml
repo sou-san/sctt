@@ -35,8 +35,11 @@ dev-dependencies = [
     "textual-dev>=1.6.1",
 ]
 
+[tool.mypy]
+ignore_missing_imports = true
+
 [tool.ruff]
-line-length = 100
+line-length = 95
 target-version = "py312"
 
 [tool.ruff.lint]
