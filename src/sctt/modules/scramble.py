@@ -1,4 +1,7 @@
 import random
+from typing import Literal
+
+CUBE_SIZE_VARIANT = Literal[2, 3, 4, 5, 6, 7]
 
 
 def _generate_2_layer_turn_moves(moves: list[str]) -> list[str]:
@@ -19,7 +22,7 @@ def _generate_3_layer_turn_moves(moves: list[str]) -> list[str]:
     return ["3" + move for move in moves if "w" in move]
 
 
-def generate_scramble(cube_size: int = 3) -> str:
+def generate_scramble(cube_size: CUBE_SIZE_VARIANT = 3) -> str:
     """
     Args:
         cube_size: 例 3x3x3 -> 3 (デフォルト値)
