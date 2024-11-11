@@ -222,6 +222,14 @@ class Cube:
             new_l,
         )
 
+    def _get_num_moves(self, move: str) -> int:
+        if "2" in move:
+            return 2
+        elif "'" in move:
+            return 3
+        else:
+            return 1
+
     def apply_scramble(self, scramble: str) -> None:
         moves_map: dict[str, Callable[[], None]] = {
             "U": self._move_u,
@@ -236,14 +244,7 @@ class Cube:
             if move not in self.VALID_MOVES:
                 raise ValueError(f"{scramble} is invalid scramble.")
 
-            if len(move) == 1:
-                num_moves = 1
-            elif move[1] == "2":
-                num_moves = 2
-            elif move[1] == "'":
-                num_moves = 3  # example U' -> U3
-            else:
-                raise ValueError("Invalid scramble")
+            num_moves: int = self._get_num_moves(move)
 
             for _ in range(num_moves):
                 moves_map[move[0]]()
