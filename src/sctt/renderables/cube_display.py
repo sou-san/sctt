@@ -26,9 +26,7 @@ class CubeDisplay:
         "Y": "#ffee00",  # 眩しさを軽減
     }
 
-    def __init__(
-        self, cube: Cube, sticker_style: STICKER_STYLE_VARIANT = "filled"
-    ) -> None:
+    def __init__(self, cube: Cube, sticker_style: STICKER_STYLE_VARIANT = "filled") -> None:
         self.cube: Cube = cube
         self.sticker_style: str = sticker_style
         self.cube_net: list[list[list[Text]]] = []
@@ -41,10 +39,7 @@ class CubeDisplay:
         return Text("██" + " \n", style=color)
 
     def _create_colored_face(self, face: list[list[str]]) -> list[list[Text]]:
-        return [
-            [self._create_colored_sticker(self.COLORS[color]) for color in row]
-            for row in face
-        ]
+        return [[self._create_colored_sticker(self.COLORS[color]) for color in row] for row in face]
 
     def _set_colored_cube_net(self, faces: dict[str, list[list[str]]]) -> None:
         self.cube_net = [self._create_colored_face(face) for face in faces.values()]
@@ -53,9 +48,7 @@ class CubeDisplay:
     def generate_renderable_cube_net(self) -> Generator[Columns, None, None]:
         self._set_colored_cube_net(self.cube.faces)
 
-        space: list[Text] = [
-            Text(" ") for _ in range(self._sticker_width * self.cube.size)
-        ]
+        space: list[Text] = [Text(" ") for _ in range(self._sticker_width * self.cube.size)]
 
         for i in range(self.cube.size):
             yield Columns(space + self.cube_net[0][i])
