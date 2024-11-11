@@ -29,6 +29,66 @@ class Cube:
     U 面を白色、F 面を緑色で固定して操作を考える。
     """
 
+    VALID_MOVES: set["str"] = {
+        # 1層回し
+        "U",
+        "D",
+        "L",
+        "R",
+        "F",
+        "B",
+        "U'",
+        "D'",
+        "L'",
+        "R'",
+        "F'",
+        "B'",
+        "U2",
+        "D2",
+        "L2",
+        "R2",
+        "F2",
+        "B2",
+        # 2層回し
+        "Uw",
+        "Dw",
+        "Lw",
+        "Rw",
+        "Fw",
+        "Bw",
+        "Uw'",
+        "Dw'",
+        "Lw'",
+        "Rw'",
+        "Fw'",
+        "Bw'",
+        "Uw2",
+        "Dw2",
+        "Lw2",
+        "Rw2",
+        "Fw2",
+        "Bw2",
+        # 3層回し
+        "3Uw",
+        "3Dw",
+        "3Lw",
+        "3Rw",
+        "3Fw",
+        "3Bw",
+        "3Uw'",
+        "3Dw'",
+        "3Lw'",
+        "3Rw'",
+        "3Fw'",
+        "3Bw'",
+        "3Uw2",
+        "3Dw2",
+        "3Lw2",
+        "3Rw2",
+        "3Fw2",
+        "3Bw2",
+    }
+
     def __init__(self, size: int = 3) -> None:
         """
         Args:
@@ -173,8 +233,8 @@ class Cube:
         }
 
         for move in scramble.split(" "):
-            if move[0] not in moves_map.keys():
-                raise ValueError("Invalid scramble")
+            if move not in self.VALID_MOVES:
+                raise ValueError(f"{scramble} is invalid scramble.")
 
             if len(move) == 1:
                 num_moves = 1
