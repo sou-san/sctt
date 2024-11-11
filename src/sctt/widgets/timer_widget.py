@@ -14,7 +14,7 @@ class TimerWidget(Static):
     class Solved(Message):
         def __init__(self, time: str) -> None:
             super().__init__()
-            self.time: str = time
+            self.time_: str = time
 
     time: reactive[str] = reactive("")
 
