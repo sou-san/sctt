@@ -39,7 +39,9 @@ class CubeDisplay:
         return Text("██" + " \n", style=color)
 
     def _create_colored_face(self, face: list[list[str]]) -> list[list[Text]]:
-        return [[self._create_colored_sticker(self.COLORS[color]) for color in row] for row in face]
+        return [
+            [self._create_colored_sticker(self.COLORS[color]) for color in row] for row in face
+        ]
 
     def _set_colored_cube_net(self, faces: dict[str, list[list[str]]]) -> None:
         self.cube_net = [self._create_colored_face(face) for face in faces.values()]
