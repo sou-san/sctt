@@ -1,4 +1,5 @@
 import copy
+import re
 from typing import Callable
 
 
@@ -92,7 +93,7 @@ class Cube:
     def __init__(self, size: int = 3) -> None:
         """
         Args:
-            size: example 3x3x3 -> 3 (現在は 3x3x3 (3) しか対応していない)
+            size: example 3x3x3 -> 3
         """
 
         if self.is_natural_number(size):
@@ -120,53 +121,84 @@ class Cube:
         # 指定された面を時計回りに回転させる
         self.faces[face] = [list(row) for row in zip(*self.faces[face][::-1], strict=True)]
 
-    def _move_u(self) -> None:
+    def _move_u(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 U -> 1, Uw -> 2, 3Uw -> 3
+        """
+
         # U 面を時計回り回転
         self._rotate_face_clockwise("U")
 
         # U 面の側面一列を時計回りにシフト
-        tmp: list[str] = self.faces["F"][0][:]
-        self.faces["F"][0] = self.faces["R"][0][:]
-        self.faces["R"][0] = self.faces["B"][0][:]
-        self.faces["B"][0] = self.faces["L"][0][:]
-        self.faces["L"][0] = tmp
+        for i in range(layers):
+            tmp: list[str] = self.faces["F"][i][:]
+            self.faces["F"][i] = self.faces["R"][i][:]
+            self.faces["R"][i] = self.faces["B"][i][:]
+            self.faces["B"][i] = self.faces["L"][i][:]
+            self.faces["L"][i] = tmp
 
-    def _move_d(self) -> None:
+    def _move_d(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 D -> 1, Dw -> 2, 3Dw -> 3
+        """
+
         # D 面を時計回り回転
         self._rotate_face_clockwise("D")
 
         # D 面の側面一列を時計回りにシフト
-        tmp: list[str] = self.faces["F"][self.size - 1][:]
-        self.faces["F"][self.size - 1] = self.faces["L"][self.size - 1][:]
-        self.faces["L"][self.size - 1] = self.faces["B"][self.size - 1][:]
-        self.faces["B"][self.size - 1] = self.faces["R"][self.size - 1][:]
-        self.faces["R"][self.size - 1] = tmp
+        for i in range(-1, (layers + 1) * -1, -1):
+            tmp: list[str] = self.faces["F"][i][:]
+            self.faces["F"][i] = self.faces["L"][i][:]
+            self.faces["L"][i] = self.faces["B"][i][:]
+            self.faces["B"][i] = self.faces["R"][i][:]
+            self.faces["R"][i] = tmp
 
-    def _move_l(self) -> None:
+    def _move_l(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 L -> 1, Lw -> 2, 3Lw -> 3
+        """
+
         # L 面を時計回り回転
         self._rotate_face_clockwise("L")
 
         # L 面の側面一列を時計回りにシフト
-        tmp: list[str] = [self.faces["U"][i][0] for i in range(self.size)]
-        for i in range(self.size):
-            self.faces["U"][i][0] = self.faces["B"][self.size - 1 - i][self.size - 1]
-            self.faces["B"][self.size - 1 - i][self.size - 1] = self.faces["D"][i][0]
-            self.faces["D"][i][0] = self.faces["F"][i][0]
-            self.faces["F"][i][0] = tmp[i]
+        for l_i in range(layers):
+            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self.size)]
 
-    def _move_r(self) -> None:
+            for s_i in range(self.size):
+                self.faces["U"][s_i][l_i] = self.faces["B"][(s_i + 1) * -1][(l_i + 1) * -1]
+                self.faces["B"][(s_i + 1) * -1][(l_i + 1) * -1] = self.faces["D"][s_i][l_i]
+                self.faces["D"][s_i][l_i] = self.faces["F"][s_i][l_i]
+                self.faces["F"][s_i][l_i] = tmp[s_i]
+
+    def _move_r(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 R -> 1, Rw -> 2, 3Rw -> 3
+        """
+
         # R 面を時計回り回転
         self._rotate_face_clockwise("R")
 
         # R 面の側面一列を時計回りにシフト
-        tmp: list[str] = [self.faces["U"][i][self.size - 1] for i in range(self.size)]
-        for i in range(self.size):
-            self.faces["U"][i][self.size - 1] = self.faces["F"][i][self.size - 1]
-            self.faces["F"][i][self.size - 1] = self.faces["D"][i][self.size - 1]
-            self.faces["D"][i][self.size - 1] = self.faces["B"][self.size - 1 - i][0]
-            self.faces["B"][self.size - 1 - i][0] = tmp[i]
+        for l_i in range(-1, (layers + 1) * -1, -1):
+            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self.size)]
 
-    def _move_f(self) -> None:
+            for s_i in range(self.size):
+                self.faces["U"][s_i][l_i] = self.faces["F"][s_i][l_i]
+                self.faces["F"][s_i][l_i] = self.faces["D"][s_i][l_i]
+                self.faces["D"][s_i][l_i] = self.faces["B"][(s_i + 1) * -1][l_i * -1 - 1]
+                self.faces["B"][(s_i + 1) * -1][l_i * -1 - 1] = tmp[s_i]
+
+    def _move_f(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 F -> 1, Fw -> 2, 3Fw -> 3
+        """
+
         # F 面を時計回りに回転
         self._rotate_face_clockwise("F")
 
@@ -176,15 +208,16 @@ class Cube:
         new_r: list[list[str]] = copy.deepcopy(self.faces["R"])
 
         # F 面の側面一列を時計回りにシフト
-        for i in range(self.size):
-            # U 面の最下行 -> L 面の最右列（逆順）
-            new_u[self.size - 1][i] = self.faces["L"][self.size - 1 - i][self.size - 1]
-            # L 面の最右列 -> D 面の最上行
-            new_l[i][self.size - 1] = self.faces["D"][0][i]
-            # D 面の最上行 -> R 面の最左列（逆順）
-            new_d[0][i] = self.faces["R"][self.size - 1 - i][0]
-            # R 面の最左列 -> U 面の最下行
-            new_r[i][0] = self.faces["U"][self.size - 1][i]
+        for l_i in range(layers):
+            for s_i in range(self.size):
+                # U 面の最下行 -> L 面の最右列（逆順）
+                new_u[(l_i + 1) * -1][s_i] = self.faces["L"][(s_i + 1) * -1][(l_i + 1) * -1]
+                # L 面の最右列 -> D 面の最上行
+                new_l[s_i][(l_i + 1) * -1] = self.faces["D"][l_i][s_i]
+                # D 面の最上行 -> R 面の最左列（逆順）
+                new_d[l_i][s_i] = self.faces["R"][(s_i + 1) * -1][l_i]
+                # R 面の最左列 -> U 面の最下行
+                new_r[s_i][l_i] = self.faces["U"][(l_i + 1) * -1][s_i]
 
         self.faces["U"], self.faces["L"], self.faces["D"], self.faces["R"] = (
             new_u,
@@ -193,7 +226,12 @@ class Cube:
             new_r,
         )
 
-    def _move_b(self) -> None:
+    def _move_b(self, layers: int = 1) -> None:
+        """
+        Args:
+            layers: 例 B -> 1, Bw -> 2, 3Bw -> 3
+        """
+
         # B 面を時計回りに回転
         self._rotate_face_clockwise("B")
 
@@ -203,15 +241,16 @@ class Cube:
         new_l: list[list[str]] = copy.deepcopy(self.faces["L"])
 
         # B 面の側面一列を時計回りにシフト
-        for i in range(self.size):
-            # U 面の最上行 -> R 面の最右列
-            new_u[0][i] = self.faces["R"][i][self.size - 1]
-            # R 面の最右列 -> D 面の最下行(逆順)
-            new_r[i][self.size - 1] = self.faces["D"][self.size - 1][self.size - 1 - i]
-            # D 面の最下行 -> L 面の最右列
-            new_d[self.size - 1][i] = self.faces["L"][i][0]
-            # L 面の最右列 -> U 面の最上行(逆順)
-            new_l[i][0] = self.faces["U"][0][self.size - 1 - i]
+        for l_i in range(layers):
+            for s_i in range(self.size):
+                # U 面の最上行 -> R 面の最右列
+                new_u[l_i][s_i] = self.faces["R"][s_i][(l_i + 1) * -1]
+                # R 面の最右列 -> D 面の最下行(逆順)
+                new_r[s_i][(l_i + 1) * -1] = self.faces["D"][(l_i + 1) * -1][(s_i + 1) * -1]
+                # D 面の最下行 -> L 面の最右列
+                new_d[(l_i + 1) * -1][s_i] = self.faces["L"][s_i][l_i]
+                # L 面の最右列 -> U 面の最上行(逆順)
+                new_l[s_i][l_i] = self.faces["U"][l_i][(s_i + 1) * -1]
 
         self.faces["U"], self.faces["R"], self.faces["D"], self.faces["L"] = (
             new_u,
@@ -219,6 +258,10 @@ class Cube:
             new_d,
             new_l,
         )
+
+    def _get_base_move(self, move: str) -> str | None:
+        result: re.Match[str] | None = re.search(r"[UDLRFB]", move)
+        return result.group() if result is not None else None
 
     def _get_num_moves(self, move: str) -> int:
         if "2" in move:
@@ -228,8 +271,17 @@ class Cube:
         else:
             return 1
 
+    def _get_num_layers(self, move: str) -> int:
+        if "w" in move:
+            if "3" in move:
+                return 3
+            else:
+                return 2
+        else:
+            return 1
+
     def apply_scramble(self, scramble: str) -> None:
-        moves_map: dict[str, Callable[[], None]] = {
+        moves_map: dict[str, Callable[[int], None]] = {
             "U": self._move_u,
             "D": self._move_d,
             "L": self._move_l,
@@ -243,11 +295,13 @@ class Cube:
                 raise ValueError(f"{scramble} is invalid scramble.")
 
             num_moves: int = self._get_num_moves(move)
+            num_layers: int = self._get_num_layers(move)
 
             for _ in range(num_moves):
-                moves_map[move[0]]()
-
-        # TODO: Uw や 3Uw などの多層回しの適用を実装する。
+                if (m := self._get_base_move(move)) is None:
+                    raise ValueError(f"Invalid move: {move}")
+                else:
+                    moves_map[m](num_layers)
 
 
 # test
