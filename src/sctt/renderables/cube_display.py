@@ -114,17 +114,30 @@ if __name__ == "__main__":
 
     from sctt.modules.simulate import Cube
 
+    # 3x3x3 scramble
     scramble: str = "R' F2 U2 L2 F2 D2 B U2 B R2 F R2 D F L D2 U' R B R"
+    # 7x7x7 scramble
+    # scramble: str = "3Rw2 D 3Lw Uw2 Bw2 Uw' Lw' D' Dw' 3Lw' F B Rw' 3Uw 3Rw' 3Lw2 3Fw2 Rw' Lw 3Lw 3Bw Bw2 L 3Bw Fw2 Uw' 3Dw' 3Fw2 R D' 3Bw2 3Lw2 3Rw2 L2 3Uw R2 Rw 3Uw2 Lw' Bw Fw' 3Dw2 3Uw R' 3Lw2 L' B' Dw2 U' 3Dw Lw2 B 3Uw Bw' L' Dw' 3Uw' Bw2 Rw' Fw B' 3Lw' Bw' 3Dw2 Lw Uw Rw2 3Rw2 Fw2 Uw 3Dw' Bw' 3Uw Lw2 3Lw' 3Fw Dw' B 3Bw' R B 3Dw2 3Fw Uw' R2 L2 Lw' 3Lw2 Bw2 3Uw Fw' F2 Rw2 U2 3Rw2 D' 3Rw R' Lw2 3Bw'"
 
     console: Console = Console()
-    cube: Cube = Cube()
-    cube_display: CubeDisplay = CubeDisplay(cube, "filled")
+    cube: Cube = Cube(3)
+    cube_display: CubeDisplay = CubeDisplay(cube, StickerSize.MINI)
 
-    console.print(f"Scramble: {scramble}", end="\n\n")
+    console.print(f"Scramble: {scramble}")
+    console.print()
+    console.print(cube_display.generate_renderable_cube_net())
 
-    console.print(cube_display.generate_renderable_cube_net())
-    console.print("=" * 60, end="\n\n")
-    cube.apply_scramble(scramble)
-    console.print(cube_display.generate_renderable_cube_net())
+    moves: list[str] = []
+
+    for move in scramble.split(" "):
+        moves.append(move)
+        console.print("=" * 80)
+        console.print("Moves:")
+        console.print(" ".join(moves))
+        console.print()
+
+        cube.apply_scramble(move)
+
+        console.print(cube_display.generate_renderable_cube_net())
 
     console.print(f"{cube_display.renderable_width} x {cube_display.renderable_height}")
