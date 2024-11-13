@@ -51,6 +51,8 @@ class TimerWidget(Static):
                 self.timer.on_press()
             case keyboard.KEY_UP:
                 self.timer.on_release()
+            case _:
+                pass
 
         match self.timer.state:
             case TimerState.STOPPED:
