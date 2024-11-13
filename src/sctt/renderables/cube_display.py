@@ -1,5 +1,6 @@
 import os
-from typing import Generator, Literal
+from enum import Enum, auto
+from typing import Generator
 
 from rich.columns import Columns
 from rich.console import group
@@ -10,7 +11,10 @@ from sctt.modules.simulate import Cube
 # x11 で Tmux を起動していると、tty で新たに起動した Tmux で正しく表示されなかった。
 # tty で使う時は、 x11 の Tmux セッションをすべて終了させて、新たに tty で Tmux を起動する必要があるみたい。
 
-STICKER_STYLE_VARIANT = Literal["mini filled", "filled"]
+
+class StickerSize(Enum):
+    MINI = auto()
+    NORMAL = auto()
 
 
 class CubeDisplay:
@@ -26,17 +30,18 @@ class CubeDisplay:
         "Y": "#ffee00",  # 眩しさを軽減
     }
 
-    def __init__(self, cube: Cube, sticker_style: STICKER_STYLE_VARIANT = "filled") -> None:
+    def __init__(self, cube: Cube, sticker_size: StickerSize = StickerSize.NORMAL) -> None:
         self.cube: Cube = cube
-        self.sticker_style: str = sticker_style
+        self.sticker_size: StickerSize = sticker_size
         self.cube_net: list[list[list[Text]]] = []
 
     def _create_colored_sticker(self, color: str) -> Text:
-        if self.sticker_style == "mini filled":
-            return Text("■", style=color)
-
-        # スタイルのために微調整
-        return Text("██" + " \n", style=color)
+        match self.sticker_size:
+            case StickerSize.MINI:
+                return Text("■", style=color)
+            case StickerSize.NORMAL:
+                # スタイルのために微調整
+                return Text("██" + " \n", style=color)
 
     def _create_colored_face(self, face: list[list[str]]) -> list[list[Text]]:
         return [
@@ -50,40 +55,57 @@ class CubeDisplay:
     def generate_renderable_cube_net(self) -> Generator[Columns, None, None]:
         self._set_colored_cube_net(self.cube.faces)
 
-        space: list[Text] = [Text(" ") for _ in range(self._sticker_width * self.cube.size)]
+        space: list[Text] = [
+            Text(" " * self._sticker_width) for _ in range(self.cube.size)
+        ] + [Text(" ")]
 
         for i in range(self.cube.size):
             yield Columns(space + self.cube_net[0][i])
 
+        yield Columns(" ")
+
         for i in range(self.cube.size):
-            yield Columns([line for face in self.cube_net[1:5] for line in face[i]])
+            result: list[Text] = []
+
+            for face in self.cube_net[1:5]:
+                for line in face[i]:
+                    result.append(line)
+
+                result.append(Text(" "))
+
+            yield Columns(result)
+
+        yield Columns(" ")
 
         for i in range(self.cube.size):
             yield Columns(space + self.cube_net[-1][i])
 
     @property
     def _sticker_width(self) -> int:
-        return 1 if self.sticker_style == "mini filled" else 2
+        match self.sticker_size:
+            case StickerSize.MINI:
+                return 1
+            case StickerSize.NORMAL:
+                return 3
 
     @property
     def renderable_width(self) -> int:
-        assert self.sticker_style in ("mini filled", "filled")
+        raw_width: int = self._sticker_width * self.cube.size * 4
+        spaced_width: int = raw_width + (self.cube.size - 1) * 4
 
-        match self.sticker_style:
-            case "mini filled":
-                return self.cube.size * self._sticker_width * 4
-            case "filled":
-                return self.cube.size * self._sticker_width * 4 * 2
+        match self.sticker_size:
+            case StickerSize.MINI:
+                return spaced_width + 3 * 3
+            case StickerSize.NORMAL:
+                return spaced_width + 3 * 3 - 1
 
     @property
     def renderable_height(self) -> int:
-        assert self.sticker_style in ("mini filled", "filled")
-
-        match self.sticker_style:
-            case "mini filled":
-                return self.cube.size * 3
-            case "filled":
-                return self.cube.size * 3 * 2
+        match self.sticker_size:
+            case StickerSize.MINI:
+                return self.cube.size * 3 + 2
+            case StickerSize.NORMAL:
+                return self.cube.size * 3 + (self.cube.size - 1) * 3 + 2 * 2 + 1
 
 
 # test
