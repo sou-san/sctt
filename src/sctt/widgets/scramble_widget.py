@@ -11,6 +11,7 @@ from textual.widgets import Select, Static
 from textual.widgets._select import SelectOverlay
 
 from sctt.modules.scramble import generate_scramble
+from sctt.version import SCTT_VERSION
 
 
 class MySelect(Select[SelectType], inherit_bindings=False):
@@ -72,6 +73,9 @@ class ScrambleWidget(Horizontal):
         yield ScrambleSettingsSelect()
         with VerticalScroll():
             yield ScrambleDisplay()
+
+    def on_mount(self) -> None:
+        self.query_one(VerticalScroll).border_title = f"sctt {SCTT_VERSION}"
 
     def update_scramble(self) -> None:
         match self.cube_size:
