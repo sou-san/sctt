@@ -4,12 +4,13 @@
     scrollbar-background-active: #000;
     scrollbar-background-hover: #000;
     scrollbar-color: gray;
-    scrollbar-color-active: #0f0 80%;
+    scrollbar-color-active: #0f0;
     scrollbar-color-hover: gray;
 }
 
 Screen {
     align: center middle;
+    background: #0D0D0D; 
     padding: 1 2;
 }
 
@@ -17,11 +18,113 @@ ModalScreen {
     background: $background;
 }
 
-VerticalScroll {
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
+# バックエンドの処理などがまだできていないため、コメントアウトしている。
+# StatusWidget {
+#     width: 0.3fr;
+#     height: 1fr;
+#     border: round #0f0 80%;
+# }
+
+ScrambleWidget {
+    width: 1fr;
+    height: 5;
+
+    VerticalScroll {
+        border-title-align: right;
+        border-title-style: bold;
+        border-title-color: #fff 80%;
+    }
+
+    ScrambleSettingsSelect {
+        width: 12;
+        height: 1fr;
+        border: round #1a5e12;
+
+        #scramble_options {
+            border-bottom: round #1a5e12;
+
+        }
+
+        MySelect {
+            width: 1fr;
+            height: auto;
+            padding: 0;
+
+            SelectCurrent {
+                background: $background 10%;
+                border: none;
+                padding: 0 1;
+
+                .arrow {
+                    color: #fff 70%;
+                }
+            }
+
+            &:focus > SelectCurrent {
+                background: #0f0;
+
+                .arrow {
+                    color: #000;
+                }
+            }
+
+            SelectOverlay {
+                background: $background 10%;
+                border: round #0f0;
+                padding: 0;
+
+                &:focus > .option-list--option-highlighted {
+                    text-style: none;
+                    color: #000;
+                    background: #0f0;
+                }
+            }
+        }
+
+   }
+
+   VerticalScroll {
+        align: center middle;
+        width: 1fr;
+        height: 1fr;
+        border: round #1a5e12;
+
+        &:focus {
+            border: round #0f0;
+        }
+
+        ScrambleDisplay {
+            content-align: center middle;
+            width: 1fr;
+            height: auto;
+            background: $background 10%;
+            padding: 0 1;
+        }
+   }
+}
+
+TimerWidget {
+    content-align: center middle;
+    width: 1fr;
+    height: 11;
+    border: round #1a5e12;
+}
+
+CubeNetWidget {
+    align: center middle;
+    width: 1fr;
+    height: 1fr;
+    border: round #1a5e12;
+    
+    &:focus {
+        border: round #0f0;
+    }
+
+    CubeNetDisplay {
+        content-align: center middle;
+        width: auto;
+        height: auto;
+    }
 }
 
 Footer {
@@ -32,38 +135,8 @@ Footer {
         padding-left: 1;
 
         .footer-key--key {
-            color: #0f0 80%;
+            color: #0f0;
             background: $background 10%;
         }
     }
-}
-
-
-# バックエンドの処理などがまだできていないため、コメントアウトしている。
-# StatusWidget {
-#     width: 0.3fr;
-#     height: 1fr;
-#     border: round #0f0 80%;
-# }
-
-ScrambleWidget {
-    content-align: center middle;
-    width: 1fr;
-    height: 5;
-    border: round #0f0 80%;
-    padding: 0 1;
-}
-
-TimerWidget {
-    content-align: center middle;
-    width: 1fr;
-    height: 11;
-    border: round #0f0 80%;
-}
-
-CubeNetWidget {
-    content-align: center middle;
-    width: 1fr;
-    height: 1fr;
-    border: round #0f0 80%;
 }
