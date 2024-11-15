@@ -23,7 +23,12 @@ class TimerWidget(Static):
         self.font: Path = Path(__file__).parents[1] / "fonts" / "mono_banner"
         self.timer = Timer()
 
-    def on_mount(self) -> None:
+    async def on_mount(self) -> None:
+        import asyncio
+
+        # self.size.width の値が 0 にならないように sleep をしている。
+        await asyncio.sleep(0.5)
+
         try:
             keyboard.hook(self.key_events)
         except ImportError:
