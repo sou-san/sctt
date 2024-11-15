@@ -1,22 +1,33 @@
-from textual.app import RenderResult
-from textual.reactive import reactive
-from textual.widget import Widget
+from textual.app import ComposeResult
+from textual.containers import VerticalScroll
+from textual.widgets import Static
 
 from sctt.modules.simulate import Cube
 from sctt.renderables.cube_display import CubeDisplay, StickerSize
 
 
-class CubeNetWidget(Widget):
-    scramble: reactive[str] = reactive("", init=False)
+class CubeNetDisplay(Static):
+    pass
 
-    def __init__(self, scramble: str) -> None:
-        super().__init__()
-        self.scramble = scramble
 
-    def watch_scramble(self) -> None:
-        cube = Cube()
-        cube.apply_scramble(self.scramble)
-        self.cube_net = CubeDisplay(cube, StickerSize.NORMAL).generate_renderable_cube_net()
+class CubeNetWidget(VerticalScroll):
+    def compose(self) -> ComposeResult:
+        yield CubeNetDisplay()
 
-    def render(self) -> RenderResult:
-        return self.cube_net
+    def update_cube_net(self, scramble: str, cube_size: int) -> None:
+        match cube_size:
+            case 2 | 3 | 4 | 5 | 6 | 7:
+                cube = Cube(cube_size)
+                cube.apply_scramble(scramble)
+                cube_display = CubeDisplay(cube, StickerSize.NORMAL)
+
+                if (
+                    cube_display.renderable_width > self.size.width
+                    or cube_display.renderable_height > self.size.height
+                ):
+                    cube_display = CubeDisplay(cube, StickerSize.MINI)
+
+                cube_net = cube_display.generate_renderable_cube_net()
+                self.query_one(CubeNetDisplay).update(cube_net)
+            case _:
+                pass
