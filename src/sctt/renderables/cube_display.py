@@ -78,7 +78,22 @@ class CubeDisplay:
         yield Columns(" ")
 
         for i in range(self.cube.size):
-            yield Columns(space + self.cube_net[-1][i])
+            if i == self.cube.size - 1:
+                tmp: list[Text] = []
+
+                for rich_text in self.cube_net[-1][i]:
+                    striped = self.strip_rich_text(rich_text, "\n")
+                    tmp.append(striped)
+
+                yield Columns(space + tmp)
+            else:
+                yield Columns(space + self.cube_net[-1][i])
+
+    @staticmethod
+    def strip_rich_text(rich_text: Text, chars: str | None = None) -> Text:
+        """Text オブジェクトをスタイルを保持したまま strip() する"""
+
+        return Text(rich_text.plain.strip(chars), style=rich_text.style)
 
     @property
     def _sticker_width(self) -> int:
