@@ -6,7 +6,7 @@ from textual.screen import ModalScreen
 from textual.widgets import Footer, Label
 
 MIN_WIDTH: int = 90
-MIN_HEIGHT: int = 38
+MIN_HEIGHT: int = 32
 
 
 class BlockingScreen(ModalScreen[None]):
