@@ -49,8 +49,12 @@ class Sctt(App[None]):
 
     @on(TimerWidget.Solved)
     def update_scramble(self) -> None:
-        self.query_one(ScrambleWidget).update_scramble()
+        self.query_one(ScrambleWidget).update()
 
     @on(ScrambleWidget.Changed)
-    async def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
-        self.query_one(CubeNetWidget).update_cube_net(message.scramble, message.cube_size)
+    def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
+        try:
+            self.query_one(CubeNetWidget).update_cube_net(message.scramble, message.cube_size)
+        except ValueError:
+            self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
+            self.query_one(ScrambleWidget).set_inputted_scramble(None)
