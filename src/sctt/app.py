@@ -2,6 +2,7 @@ import keyboard
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
+from textual.containers import Vertical
 from textual.events import Resize
 from textual.widgets import Footer
 
@@ -11,6 +12,10 @@ from sctt.widgets.scramble_widget import ScrambleWidget
 
 # from sctt.widgets.status_widget import StatusWidgets
 from sctt.widgets.timer_widget import TimerWidget
+
+
+class AppBody(Vertical):
+    pass
 
 
 class Sctt(App[None]):
@@ -25,11 +30,12 @@ class Sctt(App[None]):
         # with Horizontal():
         # バックエンドの処理などがまだできていないため、コメントアウトしている。
         # yield StatusWidgets()
-        yield ScrambleWidget()
-        self.timer_widget = TimerWidget()
-        yield self.timer_widget
-        yield CubeNetWidget()
-        yield Footer()
+        with AppBody():
+            yield ScrambleWidget()
+            self.timer_widget = TimerWidget()
+            yield self.timer_widget
+            yield CubeNetWidget()
+            yield Footer()
 
     def on_app_focus(self) -> None:
         keyboard.hook(self.timer_widget.key_events)

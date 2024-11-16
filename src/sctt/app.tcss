@@ -11,6 +11,9 @@
 Screen {
     align: center middle;
     background: #0D0D0D; 
+}
+
+AppBody {
     padding: 1 2;
 }
 
