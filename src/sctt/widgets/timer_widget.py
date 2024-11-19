@@ -5,7 +5,7 @@ from textual.message import Message
 from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Static
-from textual_pyfiglet.pyfiglet import figlet_format
+from textual_pyfiglet.pyfiglet import CharNotPrinted, figlet_format
 
 from sctt.modules.timer import Timer, TimerState
 
@@ -23,12 +23,7 @@ class TimerWidget(Static):
         self.font: Path = Path(__file__).parents[1] / "fonts" / "mono_banner"
         self.timer = Timer()
 
-    async def on_mount(self) -> None:
-        import asyncio
-
-        # self.size.width の値が 0 にならないように sleep をしている。
-        await asyncio.sleep(0.5)
-
+    def on_mount(self) -> None:
         try:
             keyboard.hook(self.key_events)
         except ImportError:
@@ -40,9 +35,13 @@ class TimerWidget(Static):
             self.set_interval(1 / 60, self.set_time)
 
     def set_time(self) -> None:
-        self.time = figlet_format(
-            self.timer.format_time().strip(), font=str(self.font), width=self.size.width
-        ).strip("\n")
+        try:
+            self.time = figlet_format(
+                self.timer.format_time().strip(), font=str(self.font), width=self.size.width
+            ).strip("\n")
+        except CharNotPrinted:
+            # 起動時に self.size.width の値が 0 になる場合にアプリが落ちるのを防ぐ。
+            pass
 
     def key_events(self, event: keyboard.KeyboardEvent) -> None:
         if isinstance(self.app.screen, ModalScreen) or event.name != "space":
