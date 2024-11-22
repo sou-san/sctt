@@ -34,7 +34,8 @@ class Sctt(App[None]):
             yield ScrambleWidget()
             self.timer_widget = TimerWidget()
             yield self.timer_widget
-            yield CubeNetWidget()
+            self.cube_net_widget = CubeNetWidget()
+            yield self.cube_net_widget
             yield Footer()
 
     def on_app_focus(self) -> None:
@@ -54,7 +55,7 @@ class Sctt(App[None]):
     @on(ScrambleWidget.Changed)
     def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
         try:
-            self.query_one(CubeNetWidget).update_cube_net(message.scramble, message.cube_size)
+            self.cube_net_widget.update_cube_net(message.scramble, message.cube_size)
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
             self.query_one(ScrambleWidget).set_inputted_scramble(None)
