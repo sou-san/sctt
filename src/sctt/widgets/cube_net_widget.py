@@ -1,16 +1,16 @@
 from textual.app import ComposeResult
-from textual.containers import VerticalScroll
 from textual.widgets import Static
 
 from sctt.modules.simulate import Cube
 from sctt.renderables.cube_display import CubeDisplay, StickerSize
+from sctt.widgets.my_vertical_scroll import MyVerticalScroll
 
 
 class CubeNetDisplay(Static):
     pass
 
 
-class CubeNetWidget(VerticalScroll):
+class CubeNetWidget(MyVerticalScroll):
     def compose(self) -> ComposeResult:
         yield CubeNetDisplay()
 

@@ -128,7 +128,7 @@ ScrambleWidget {
 
    }
 
-   VerticalScroll {
+   MyVerticalScroll {
         align: center middle;
         width: 1fr;
         height: 1fr;

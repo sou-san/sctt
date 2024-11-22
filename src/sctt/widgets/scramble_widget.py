@@ -15,6 +15,7 @@ from textual.widgets._select import SelectOverlay
 from sctt.modules.scramble import generate_scramble
 from sctt.screens.input_scramble_screen import InputScrambleScreen
 from sctt.version import SCTT_VERSION
+from sctt.widgets.my_vertical_scroll import MyVerticalScroll
 
 
 class ScrambleMode(Enum):
@@ -82,7 +83,7 @@ class ScrambleWidget(Horizontal):
 
     def compose(self) -> ComposeResult:
         yield ScrambleSettingsSelect()
-        with VerticalScroll():
+        with MyVerticalScroll():
             yield ScrambleDisplay()
 
     def on_mount(self) -> None:
