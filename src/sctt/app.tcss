@@ -5,7 +5,7 @@
     scrollbar-background-hover: #000;
     scrollbar-color: gray;
     scrollbar-color-active: #0f0;
-    scrollbar-color-hover: gray;
+    scrollbar-color-hover: #aaa;
 }
 
 Screen {
@@ -34,6 +34,7 @@ InputScrambleScreen {
         }
 
         TextArea {
+            background: #0D0D0D;
             width: 1fr;
             height: 3fr;
             border: round #1a5e12;
@@ -107,6 +108,10 @@ ScrambleWidget {
 
             &:focus > SelectCurrent {
                 background: #0f0;
+
+                Static#label {
+                    color: #000;
+                }
 
                 .arrow {
                     color: #000;
