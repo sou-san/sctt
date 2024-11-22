@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2024-11-23
 ### Added
 - Added 2x2x2, 4x4x4, 5x5x5, 6x6x6 and 7x7x7 scramble feature.
 - Added 2x2x2, 4x4x4, 5x5x5, 6x6x6 and 7x7x7 cube net display feature.
@@ -26,5 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added timer feature.
 - Added blocking screen when too small app size.
 
-[unreleased]: https://github.com/sou-san/sctt/compare/v0.1.0...HEAD
+[0.2.0]: https://github.com/sou-san/sctt/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/sou-san/sctt/releases/tag/v0.1.0
