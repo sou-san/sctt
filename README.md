@@ -4,15 +4,16 @@
 
 It's a TUI speed cube timer app. It can generate scrambles, measure time and display the cube's state as a cube net. It can also be used on the Linux console. (A color that cannot be displayed may change to a different color that can be displayed.)
 
-**It must be run as root to detect keyboard events.**
 
 ## Usage
 ### Using uv
+#### Linux
 If you don't have uv installed, please install it.
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 ---
+**It must be run as root to detect keyboard events.**
 ```bash
 uv tool install sctt
 ```
@@ -24,21 +25,21 @@ or
 sudo -E $(which uvx) sctt
 ```
 
-### Using pipx
-If you don't have pipx installed, please install it.
-```bash
-sudo apt update && sudo apt install pipx
+#### Windows
+If you don't have uv installed, please install it.
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 ---
-```bash
-pipx install sctt
+```powershell
+uv tool install sctt
 ```
-```bash
-sudo -E $(which sctt)
+```powershell
+sctt
 ```
 or
-```bash
-sudo -E $(which pipx) run sctt
+```powershell
+uvx sctt
 ```
 
 ## Screenshots
