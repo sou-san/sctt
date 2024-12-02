@@ -64,13 +64,6 @@ InputScrambleScreen {
     }
 }
 
-# バックエンドの処理などがまだできていないため、コメントアウトしている。
-# StatusWidget {
-#     width: 0.3fr;
-#     height: 1fr;
-#     border: round #0f0 80%;
-# }
-
 ScrambleWidget {
     width: 1fr;
     height: 5;

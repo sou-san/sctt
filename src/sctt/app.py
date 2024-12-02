@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import keyboard
 from textual import on
 from textual.app import App, ComposeResult
@@ -19,7 +21,7 @@ class AppBody(Vertical):
 
 
 class Sctt(App[None]):
-    CSS_PATH = "app.tcss"
+    CSS_PATH = Path(__file__).parent / "app.tcss"
     ENABLE_COMMAND_PALETTE = False
     BINDINGS = [
         Binding("q", "quit", "Quit"),
