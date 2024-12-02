@@ -10,10 +10,10 @@ requires-python = ">=3.12"
 license = { file = "LICENSE" }
 keywords = ["sctt", "speed cube timer", "scrambler", "cli", "tui", "terminal", "tool"]
 dependencies = [
-    "textual>=0.86.3",
-    "textual-pyfiglet==0.5.0",
     "keyboard>=0.13.5",
     "rich>=13.9.4",
+    "textual>=0.88.1",
+    "textual-pyfiglet>=0.5.5",
 ]
 
 [project.urls]
