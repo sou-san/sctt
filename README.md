@@ -41,6 +41,12 @@ or
 ```powershell
 uvx sctt
 ```
+##### WSL2
+sctt cannot be run because WSL2 cannot detect key release events.  
+Instead, run it via powershell as follows.
+```bash
+powershell.exe sctt
+```
 
 ## Screenshots
 ![sctt_screenshot_7x7x7](https://github.com/user-attachments/assets/4670e5ad-1732-4822-aa96-29d033697825)
