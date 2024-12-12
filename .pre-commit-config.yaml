@@ -1,16 +1,32 @@
 repos:
-- repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
-  rev: v0.8.2
-  hooks:
-    # Run the linter.
-    - id: ruff
-      args: [ --fix ]
-    # Run the formatter.
-    - id: ruff-format
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-yaml
+      - id: check-added-large-files
 
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.13.0  # Use the sha / tag you want to point at
-  hooks:
-  - id: mypy
-    args: [--strict, --ignore-missing-imports]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.8.2
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0  # Use the sha / tag you want to point at
+    hooks:
+    - id: mypy
+      args: [--config-file=pyproject.toml, src]
+      pass_filenames: false
+      additional_dependencies: [
+        "keyboard>=0.13.5",
+        "rich>=13.9.4",
+        "textual>=0.88.1",
+        "textual-pyfiglet>=0.5.5",
+      ]
