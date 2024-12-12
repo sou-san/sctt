@@ -8,9 +8,11 @@ from textual.widgets import Button, Label, TextArea
 class InputScrambleScreen(ModalScreen[str | None]):
     def compose(self) -> ComposeResult:
         with Vertical():
-            with Center():
-                yield Label("Input scramble")
-            yield TextArea()
+            with Vertical():
+                with Center():
+                    yield Label("Input scramble")
+                with Center():
+                    yield TextArea()
             with Horizontal():
                 yield Button("Ok", id="ok")
                 yield Button("Cancel", id="cancel")

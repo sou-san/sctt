@@ -10,7 +10,7 @@
 
 Screen {
     align: center middle;
-    background: #0D0D0D; 
+    background: #0D0D0D;
 }
 
 AppBody {
@@ -22,43 +22,51 @@ InputScrambleScreen {
     background: #0D0D0D 25%;
 
     Vertical {
-        align: center middle;
-        width: 70%;
-        height: 60%;
+        width: 60%;
+        height: 50%;
+        padding: 0 4;
         border: round #0f0;
 
-        Label {
-            width: auto;
-            height: auto;
-            margin: 1;
-        }
-
-        TextArea {
-            background: #0D0D0D;
+        Vertical {
             width: 1fr;
-            height: 3fr;
-            border: round #1a5e12;
-            margin: 0 4;
+            height: 1fr;
+            padding: 0;
+            border: none;
+            margin: 1 0;
 
-            &:focus {
-                border: round #0f0;
+            TextArea {
+                background: #0D0D0D;
+                border: round #1a5e12;
+                margin: 1 0;
+
+                &:focus {
+                    border: round #0f0;
+                }
             }
         }
 
         Horizontal {
             align: center middle;
-            height: 0.5fr;
-            margin: 1;
+            height: auto;
+            margin-bottom: 1;
 
             Button {
                 text-style: none;
+                background: #0D0D0D;
                 border: round #1a5e12;
-                background: #0D0D0D; 
-                margin: 0 6;
+                margin: 0;
 
                 &:focus {
                     border: round #0f0;
                 }
+            }
+
+            #ok {
+                margin-right: 4;
+            }
+
+            #cancel {
+                margin-left: 4;
             }
         }
     }
@@ -158,7 +166,7 @@ CubeNetWidget {
     width: 1fr;
     height: 1fr;
     border: round #1a5e12;
-    
+
     &:focus {
         border: round #0f0;
     }
@@ -185,6 +193,6 @@ Footer {
 }
 
 Toast {
-    background: #0D0D0D; 
+    background: #0D0D0D;
     border: round #0f0;
 }
