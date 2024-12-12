@@ -62,10 +62,8 @@ class ScrambleSettingsSelect(Vertical):
     ]
 
     def compose(self) -> ComposeResult:
-        yield MySelect[ScrambleMode](
-            self.SCRAMBLE_OPTIONS, allow_blank=False, id="scramble_options"
-        )
-        yield MySelect[int](self.CUBE_SIZE_OPTIONS, allow_blank=False)
+        yield MySelect(self.SCRAMBLE_OPTIONS, allow_blank=False, id="scramble_options")
+        yield MySelect(self.CUBE_SIZE_OPTIONS, allow_blank=False)
 
 
 class ScrambleDisplay(Static):
