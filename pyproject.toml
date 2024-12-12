@@ -4,7 +4,7 @@ version = "0.2.1"
 description = "SpeedCubeTimer-TUI (sctt)"
 readme = "README.md"
 authors = [
-    { name = "sou-san", email = "sou887867@gmail.com" } 
+    { name = "sou-san", email = "sou887867@gmail.com" }
 ]
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
