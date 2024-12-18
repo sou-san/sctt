@@ -66,6 +66,30 @@ Instead, run it via powershell as follows.
 powershell.exe sctt
 ```
 
+## Development
+
+```bash
+git clone https://github.com/sou-san/sctt
+```
+
+```bash
+cd sctt
+```
+
+---
+
+### Linux
+
+```bash
+sudo $(which uv) run textual run --dev src/sctt/__main__.py
+```
+
+### Windows
+
+```powershell
+uv run textual run --dev src/sctt/__main__.py
+```
+
 ## Screenshots
 
 ![sctt_screenshot_7x7x7](https://github.com/user-attachments/assets/4670e5ad-1732-4822-aa96-29d033697825)
