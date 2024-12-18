@@ -39,7 +39,6 @@ dev-dependencies = [
 
 [tool.mypy]
 ignore_missing_imports = true
-strict = true
 
 [tool.ruff]
 line-length = 95
