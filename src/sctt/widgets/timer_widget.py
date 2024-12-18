@@ -12,9 +12,9 @@ from sctt.modules.timer import Timer, TimerState
 
 class TimerWidget(Static):
     class Solved(Message):
-        def __init__(self, time: str) -> None:
+        def __init__(self, time: float) -> None:
             super().__init__()
-            self.time_: str = time
+            self.time_: float = time
 
     time: reactive[str] = reactive("")
 
@@ -34,14 +34,24 @@ class TimerWidget(Static):
         else:
             self.set_interval(1 / 60, self.set_time)
 
+    def style_time(self) -> str:
+        formatted_time: str = self.timer.format_time(
+            self.timer.get_elapsed_time(), timer_state=True
+        )
+        styled_time: str = str(
+            figlet_format(formatted_time, str(self.font), width=self.size.width)
+        )
+        return styled_time.strip("\n")
+
     def set_time(self) -> None:
         try:
-            self.time = figlet_format(
-                self.timer.format_time().strip(), font=str(self.font), width=self.size.width
-            ).strip("\n")
+            self.time = self.style_time()
         except CharNotPrinted:
             # 起動時に self.size.width の値が 0 になる場合にアプリが落ちるのを防ぐ。
             pass
+
+    def watch_time(self, time: str) -> None:
+        self.update(time)
 
     def key_events(self, event: keyboard.KeyboardEvent) -> None:
         if isinstance(self.app.screen, ModalScreen) or event.name != "space":
@@ -50,7 +60,7 @@ class TimerWidget(Static):
         match event.event_type:
             case keyboard.KEY_DOWN:
                 if self.timer.state == TimerState.RUNNING:
-                    self.post_message(self.Solved(self.time))
+                    self.post_message(self.Solved(self.timer.get_elapsed_time()))
 
                 self.timer.on_press()
             case keyboard.KEY_UP:
@@ -67,8 +77,3 @@ class TimerWidget(Static):
                 self.styles.color = "#0f0 80%"
             case TimerState.RUNNING:
                 self.styles.color = "#fff 85%"
-
-        self.set_time()
-
-    def watch_time(self, time: str) -> None:
-        self.update(time)
