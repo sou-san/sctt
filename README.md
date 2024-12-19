@@ -81,13 +81,13 @@ cd sctt
 ### Linux
 
 ```bash
-sudo $(which uv) run textual run --dev src/sctt/__main__.py
+sudo -E $(which uv) run textual run --dev src/sctt/__main__.py
 ```
 
 ### Windows
 
 ```powershell
-uv run textual run --dev src/sctt/__main__.py
+uv run textual run --dev .\src\sctt\__main__.py
 ```
 
 ## Screenshots
