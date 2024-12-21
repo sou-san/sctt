@@ -30,7 +30,7 @@ class Cube:
     U 面を白色、F 面を緑色で固定して操作を考える。
     """
 
-    VALID_MOVES: set["str"] = {
+    VALID_MOVES: set[str] = {
         # 1層回し
         "U",
         "D",
