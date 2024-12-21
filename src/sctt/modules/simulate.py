@@ -118,7 +118,13 @@ class Cube:
         }
 
     def _rotate_face_clockwise(self, face: str) -> None:
-        # 指定された面を時計回りに回転させる
+        """
+        面を時計回りに回転させる
+
+        Args:
+            face: 回転させる面を指定する
+        """
+
         self.faces[face] = [list(row) for row in zip(*self.faces[face][::-1], strict=True)]
 
     def _move_u(self, layers: int = 1) -> None:
