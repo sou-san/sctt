@@ -12,7 +12,12 @@ class StatsWidget(DataTable[Text]):
     def on_mount(self) -> None:
         self.cursor_type = "none"
         self.zebra_stripes = True
-        self.add_columns("no.", "time", "ao5", "ao12")  # header
+
+        # header
+        self.add_column("no.", key="no.")
+        self.add_column("time", key="time")
+        self.add_column("ao5", key="ao5")
+        self.add_column("ao12", key="ao12")
 
     def update(self, solves: list[tuple[Any, ...]]) -> None:
         self.clear()
