@@ -106,7 +106,7 @@ class Sctt(App[None]):
         solve_id: int | None = self.save_solve()
 
         if solve_id is None:
-            raise ValueError("Failed to add solve.")
+            raise ValueError("Failed to add solve to database.")
         else:
             self.query_one(StatsWidget).update(
                 self.db.get_solve_ids_and_times(self.solve_buffer.session_id)
