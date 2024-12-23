@@ -101,7 +101,7 @@ class Sctt(App[None]):
         return solve_id
 
     @on(TimerWidget.Solved)
-    def update_record(self, message: TimerWidget.Solved) -> None:
+    def update_stats(self, message: TimerWidget.Solved) -> None:
         self.solve_buffer.time = message.time_
         solve_id: int | None = self.save_solve()
 
