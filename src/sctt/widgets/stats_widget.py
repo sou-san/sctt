@@ -18,7 +18,6 @@ class StatsWidget(DataTable[Text]):
         self.clear()
 
         num_solves: int = len(solves)
-        solve_ids: list[Any] = [solve[0] for solve in solves]
 
         df: pd.DataFrame = pd.DataFrame()
         df["time"] = [solve[1] for solve in solves]
@@ -31,10 +30,12 @@ class StatsWidget(DataTable[Text]):
         df["no."] = list(range(1, num_solves + 1))
         df = df.loc[:, ["no.", "time", "ao5", "ao12"]]
 
-        df = df[::-1]  # 逆順にする
+        # 逆順にする
+        df = df[::-1]
+        solve_ids: list[int] = list(reversed([int(solve[0]) for solve in solves]))
 
         for solve_id, row in zip(
-            solve_ids, df.itertuples(index=False, name=None), strict=False
+            solve_ids, df.itertuples(index=False, name=None), strict=True
         ):
             styled_row = [Text(str(cell), justify="center") for cell in row]
-            self.add_row(*styled_row, key=solve_id)
+            self.add_row(*styled_row, key=str(solve_id))
