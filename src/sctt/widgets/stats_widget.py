@@ -2,13 +2,13 @@ from typing import Any
 
 import pandas as pd
 from rich.text import Text
-from textual.widgets import DataTable
 
 from sctt.modules.calculate_ao import calculate_ao
 from sctt.modules.timer import Timer
+from sctt.widgets.my_datatable import MyDataTable
 
 
-class StatsWidget(DataTable[Text]):
+class StatsWidget(MyDataTable[Text]):
     def on_mount(self) -> None:
         self.cursor_type = "none"
         self.zebra_stripes = True
