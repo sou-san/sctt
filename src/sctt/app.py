@@ -65,7 +65,8 @@ class Sctt(App[None]):
     def compose(self) -> ComposeResult:
         with AppBody():
             with Horizontal():
-                yield StatsWidget()
+                self.stats_widget = StatsWidget()
+                yield self.stats_widget
                 with Vertical():
                     yield ScrambleWidget()
                     self.timer_widget = TimerWidget()
@@ -75,9 +76,7 @@ class Sctt(App[None]):
             yield Footer()
 
     def on_mount(self) -> None:
-        self.query_one(StatsWidget).update(
-            self.db.get_solve_ids_and_times(self.solve_buffer.session_id)
-        )
+        self.stats_widget.update(self.db.get_solve_ids_and_times(self.solve_buffer.session_id))
 
     def on_app_focus(self) -> None:
         keyboard.hook(self.timer_widget.key_events)
