@@ -70,53 +70,29 @@ class Timer:
                 return min(self._elapsed_time, self.MAXIMUM_TIME)
 
     @staticmethod
-    def _convert_seconds_to_hms(seconds: float) -> tuple[float, float, float]:
+    def _convert_seconds_to_hms(seconds: float) -> tuple[int, int, float]:
         m, s = divmod(seconds, 60)
         h, m = divmod(m, 60)
 
-        return h, m, s
+        return int(h), int(m), s
 
     @staticmethod
-    def _format_time_accuracy(total_seconds: float, decimal_places: int) -> str:
-        """
+    def format_time(seconds: float, decimal_places: int) -> str:
+        """フォーマットされたタイムの文字列を返す関数
+
         Args:
-            decimal_places: 小数点第何位まで表示するかを指定する。
+            seconds (float): フォーマットするタイムを指定する
+            decimal_places (int): 小数点第何位までか指定する
         """
 
         init_time: float = 0.0
-        hours, minutes, seconds = Timer._convert_seconds_to_hms(total_seconds)
+        h, m, s = Timer._convert_seconds_to_hms(seconds)
 
-        if hours:
-            return (
-                f"{hours:.0f}:{minutes:02.0f}:{seconds:0{3+decimal_places}.{decimal_places}f}"
-            )
-        elif minutes:
-            return f"{minutes:.0f}:{seconds:0{3+decimal_places}.{decimal_places}f}"
-        elif seconds:
-            return f"{seconds:.{decimal_places}f}"
+        if h:
+            return f"{h}:{m:02}:{s:0{3+decimal_places}.{decimal_places}f}"
+        elif m:
+            return f"{m}:{s:0{3+decimal_places}.{decimal_places}f}"
+        elif s:
+            return f"{s:.{decimal_places}f}"
         else:
             return f"{init_time:.0{decimal_places}f}"
-
-    def format_time(
-        self,
-        elapsed_time: float,
-        decimal_places: int = 2,
-        timer_state: bool = False,
-    ) -> str:
-        """
-        フォーマットされたタイムの文字列を返す関数
-
-        Args:
-            time: フォーマットするタイムを指定する。
-            decimal_places: 小数点第何位までか指定する。
-            timer_state: タイマーの状態によって動的にフォーマットするかどうかを指定する。
-        """
-
-        if timer_state:
-            match self.state:
-                case TimerState.RUNNING:
-                    return Timer._format_time_accuracy(elapsed_time, 1)
-                case _:
-                    return Timer._format_time_accuracy(elapsed_time, 2)
-        else:
-            return Timer._format_time_accuracy(elapsed_time, decimal_places)

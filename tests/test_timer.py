@@ -95,31 +95,20 @@ def test_calculate_elapsed_time_maximum(monkeypatch: MonkeyPatch) -> None:
 def test_format_time() -> None:
     """format_time メソッドのフォーマット確認"""
 
-    timer: Timer = Timer()
+    assert Timer.format_time(0, 2) == "0.00"
+    assert Timer.format_time(7.24593, 2) == "7.25"
+    assert Timer.format_time(65.1234, 2) == "1:05.12"
+    assert Timer.format_time(3605.5678, 2) == "1:00:05.57"
+    assert Timer.format_time(1376.92586, 2) == "22:56.93"
 
-    assert timer.format_time(0) == "0.00"
-    assert timer.format_time(65.1234) == "1:05.12"
-    assert timer.format_time(3605.5678) == "1:00:05.57"
-    assert timer.format_time(1376.92586) == "22:56.93"
+    assert Timer.format_time(0, 3) == "0.000"
+    assert Timer.format_time(7.24593, 3) == "7.246"
+    assert Timer.format_time(65.1234, 3) == "1:05.123"
+    assert Timer.format_time(3605.5678, 3) == "1:00:05.568"
+    assert Timer.format_time(1376.92586, 3) == "22:56.926"
 
-
-def test_format_time_with_timer_state() -> None:
-    """RUNNING 状態では小数一位、その他では小数二位のフォーマット確認"""
-
-    timer: Timer = Timer()
-
-    timer.state = TimerState.STOPPED
-
-    assert timer.format_time(65.1234, timer_state=True) == "1:05.12"
-
-    timer.state = TimerState.WAITING_FOR_START
-
-    assert timer.format_time(65.1234, timer_state=True) == "1:05.12"
-
-    timer.state = TimerState.READY_TO_START
-
-    assert timer.format_time(65.1234, timer_state=True) == "1:05.12"
-
-    timer.state = TimerState.RUNNING
-
-    assert timer.format_time(65.1234, timer_state=True) == "1:05.1"
+    assert Timer.format_time(0, 4) == "0.0000"
+    assert Timer.format_time(7.24593, 4) == "7.2459"
+    assert Timer.format_time(65.1234, 4) == "1:05.1234"
+    assert Timer.format_time(3605.5678, 4) == "1:00:05.5678"
+    assert Timer.format_time(1376.92586, 4) == "22:56.9259"

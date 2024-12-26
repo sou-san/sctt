@@ -35,9 +35,15 @@ class TimerWidget(Static):
             self.set_interval(1 / 60, self.set_time)
 
     def style_time(self) -> str:
-        formatted_time: str = self.timer.format_time(
-            self.timer.get_elapsed_time(), timer_state=True
-        )
+        decimal_places: int
+
+        match self.timer.state:
+            case TimerState.RUNNING:
+                decimal_places = 1
+            case _:
+                decimal_places = 2
+
+        formatted_time: str = Timer.format_time(self.timer.get_elapsed_time(), decimal_places)
         styled_time: str = str(
             figlet_format(formatted_time, str(self.font), width=self.size.width)
         )
