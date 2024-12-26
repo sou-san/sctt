@@ -70,11 +70,11 @@ class Timer:
                 return min(self._elapsed_time, self.MAXIMUM_TIME)
 
     @staticmethod
-    def _get_h_m_s(total_seconds: float) -> tuple[float, float, float]:
-        minutes, seconds = divmod(total_seconds, 60)
-        hours, minutes = divmod(minutes, 60)
+    def _convert_seconds_to_hms(seconds: float) -> tuple[float, float, float]:
+        m, s = divmod(seconds, 60)
+        h, m = divmod(m, 60)
 
-        return hours, minutes, seconds
+        return h, m, s
 
     @staticmethod
     def _format_time_accuracy(total_seconds: float, decimal_places: int) -> str:
@@ -84,7 +84,7 @@ class Timer:
         """
 
         init_time: float = 0.0
-        hours, minutes, seconds = Timer._get_h_m_s(total_seconds)
+        hours, minutes, seconds = Timer._convert_seconds_to_hms(total_seconds)
 
         if hours:
             return (
