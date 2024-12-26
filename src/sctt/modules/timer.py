@@ -93,7 +93,7 @@ class Timer:
         elif minutes:
             return f"{minutes:.0f}:{seconds:0{3+decimal_places}.{decimal_places}f}"
         elif seconds:
-            return f"{seconds:<{3+decimal_places}.{decimal_places}f}"
+            return f"{seconds:.{decimal_places}f}"
         else:
             return f"{init_time:.0{decimal_places}f}"
 
