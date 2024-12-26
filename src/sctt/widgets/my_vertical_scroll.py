@@ -15,3 +15,18 @@ class MyVerticalScroll(VerticalScroll):
         Binding("ctrl+pageup", "page_left", "Page Left", show=False),
         Binding("ctrl+pagedown", "page_right", "Page Right", show=False),
     ]
+    """Keyboard bindings for scrollable containers.
+
+    | Key(s) | Description |
+    | :- | :- |
+    | up,k | Scroll up, if vertical scrolling is available. |
+    | down,j | Scroll down, if vertical scrolling is available. |
+    | left,h | Scroll left, if horizontal scrolling is available. |
+    | right,l | Scroll right, if horizontal scrolling is available. |
+    | home,g | Scroll to the home position, if scrolling is available. |
+    | end,G | Scroll to the end position, if scrolling is available. |
+    | pageup,ctrl+b | Scroll up one page, if vertical scrolling is available. |
+    | pagedown,ctrl+f | Scroll down one page, if vertical scrolling is available. |
+    | ctrl+pageup | Scroll left one page, if horizontal scrolling is available. |
+    | ctrl+pagedown | Scroll right one page, if horizontal scrolling is available. |
+    """
