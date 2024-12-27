@@ -4,8 +4,12 @@ from sctt.modules.database import Database
 
 
 def main() -> None:
-    db: Database = Database(get_database_file())
-    Sctt(db).run()
+    try:
+        db: Database = Database(get_database_file())
+    except PermissionError:
+        print("You must be root to use sctt on linux.\n\nsudo -E $(which sctt)")
+    else:
+        Sctt(db).run()
 
 
 if __name__ == "__main__":
