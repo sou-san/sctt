@@ -4,6 +4,26 @@ from typing import Any
 
 
 class Database:
+    """データベースを管理するクラス
+
+    ## テーブル例
+
+    ### sessions table
+
+    | id |    name   |      created_at     |      updated_at     |
+    |:--:|:---------:|:-------------------:|:-------------------:|
+    |  1 | session 1 | 2024-12-22 13:50:31 | 2024-12-22 17:15:12 |
+    |  2 | session 2 | 2024-12-22 14:10:58 | 2024-12-22 14:10:58 |
+
+    ### solves table
+
+    | id | event |  time | penalty |                        scramble                       |         date        | session_id |
+    |:--:|:-----:|:-----:|:-------:|:-----------------------------------------------------:|:-------------------:|:----------:|
+    |  1 | 3x3x3 | 12.34 |   dnf   |  L2 F U B2 D F2 U' F2 U' L2 B2 L2 U' B' L' B F L F U2 | 2024-12-22 13:50:31 |      1     |
+    |  2 | 2x2x2 |  5.67 |         |                 R F2 R' U F' U F2 R2 U'               | 2024-12-22 14:10:58 |      2     |
+    |  3 | 3x3x3 | 11.82 |  plus_2 | U2 B2 L R U2 R U2 F2 L B2 U2 B2 D' B' D B' R2 D2 F2 U | 2024-12-22 17:15:12 |      1     |
+    """
+
     def __init__(self, db_path: Path) -> None:
         self.db_path: Path = db_path
 
