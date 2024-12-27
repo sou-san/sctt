@@ -82,6 +82,12 @@ class Database:
         with self._get_connection() as conn:
             return conn.execute(query, (id,)).fetchall()
 
+    def get_solve(self, session_id: int, solve_id: int) -> tuple[Any, ...]:
+        query: str = "SELECT * FROM solves WHERE session_id = ? AND id = ?;"
+
+        with self._get_connection() as conn:
+            return conn.execute(query, (session_id, solve_id)).fetchall()[0]
+
     def get_all_sessions(self) -> list[tuple[Any, ...]]:
         query: str = "SELECT * FROM sessions;"
 
