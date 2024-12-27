@@ -78,27 +78,30 @@ class Database:
         with self._get_connection() as conn:
             conn.execute(query, (id,))
 
+    def _update_session_updated_at(self, session_id: int, conn: sqlite3.Connection) -> None:
+        query: str = "UPDATE sessions SET updated_at = DATETIME('now') WHERE id = ?;"
+
+        conn.execute(query, (session_id,))
+
     def add_solve(
         self, event: str, time: float, scramble: str, session_id: int, penalty: str = ""
     ) -> int | None:
-        query_solve: str = "INSERT INTO solves (event, time, penalty, scramble, date, session_id) VALUES (?, ?, ?, ?, DATETIME('now'), ?);"
-        query_update: str = "UPDATE sessions SET updated_at = DATETIME('now') WHERE id = ?;"
+        query: str = "INSERT INTO solves (event, time, penalty, scramble, date, session_id) VALUES (?, ?, ?, ?, DATETIME('now'), ?);"
 
         with self._get_connection() as conn:
             solve_id: int | None = conn.execute(
-                query_solve, (event, time, penalty, scramble, session_id)
+                query, (event, time, penalty, scramble, session_id)
             ).lastrowid
-            conn.execute(query_update, (session_id,))
+            self._update_session_updated_at(session_id, conn)
 
             return solve_id
 
     def remove_solve(self, solve_id: int, session_id: int) -> None:
-        query_delete: str = "DELETE FROM solves WHERE id = ?;"
-        query_update: str = "UPDATE sessions SET updated_at = DATETIME('now') WHERE id = ?;"
+        query: str = "DELETE FROM solves WHERE id = ?;"
 
         with self._get_connection() as conn:
-            conn.execute(query_delete, (solve_id,))
-            conn.execute(query_update, (session_id,))
+            conn.execute(query, (solve_id,))
+            self._update_session_updated_at(session_id, conn)
 
     def get_session(self, id: int) -> list[tuple[Any, ...]]:
         query: str = "SELECT * FROM sessions WHERE id = ?;"
