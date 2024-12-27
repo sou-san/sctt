@@ -33,10 +33,12 @@ class Database:
         query: str = """
         CREATE TABLE IF NOT EXISTS solves (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id INTEGER NOT NULL,
+            event TEXT NOT NULL,
             time REAL NOT NULL,
+            penalty TEXT NOT NULL,
             scramble TEXT NOT NULL,
             date TEXT NOT NULL,
+            session_id INTEGER NOT NULL,
             FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         );
         """
