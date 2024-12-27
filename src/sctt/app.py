@@ -28,7 +28,9 @@ def save_last_session_id(session_id: int) -> None:
 
 
 class SolveBuffer:
+    event: str
     time: float
+    penalty: str
     scramble: str
     session_id: int
 
@@ -94,7 +96,10 @@ class Sctt(App[None]):
 
     def save_solve(self) -> int | None:
         solve_id: int | None = self.db.add_solve(
-            self.solve_buffer.time, self.solve_buffer.scramble, self.solve_buffer.session_id
+            self.solve_buffer.event,
+            self.solve_buffer.time,
+            self.solve_buffer.scramble,
+            self.solve_buffer.session_id,
         )
 
         return solve_id

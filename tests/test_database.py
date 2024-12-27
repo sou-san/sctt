@@ -50,7 +50,7 @@ def test_add_solve(db: Database) -> None:
     if session_id is None:
         raise ValueError
 
-    solve_id: int | None = db.add_solve(12.34, "D2 R2 U2", session_id)
+    solve_id: int | None = db.add_solve("3x3x3", 12.34, "D2 R2 U2", session_id, "dnf")
 
     assert solve_id is not None, "ソルブが正常に追加されるべき"
 
@@ -70,7 +70,7 @@ def test_remove_solve(db: Database) -> None:
     if session_id is None:
         raise ValueError
 
-    solve_id: int | None = db.add_solve(12.34, "D2 R2 U2", session_id)
+    solve_id: int | None = db.add_solve("3x3x3", 12.34, "D2 R2 U2", session_id, "dnf")
 
     if solve_id is None:
         raise ValueError
@@ -88,7 +88,7 @@ def test_foreign_key_constraint(db: Database) -> None:
     if session_id is None:
         raise ValueError
 
-    db.add_solve(12.34, "D2 R2 U2", session_id)
+    db.add_solve("3x3x3", 12.34, "D2 R2 U2", session_id, "dnf")
 
     db.delete_session(session_id)
 
@@ -107,9 +107,9 @@ def test_get_solve_times(db: Database) -> None:
     if session_id is None:
         raise ValueError
 
-    db.add_solve(12.34, "D2 R2 U2", session_id)
-    db.add_solve(23.45, "D2 R2 U2", session_id)
-    db.add_solve(34.56, "D2 R2 U2", session_id)
+    db.add_solve("3x3x3", 12.34, "D2 R2 U2", session_id, "dnf")
+    db.add_solve("4x4x4", 23.45, "D2 R2 U2", session_id, "plus_2")
+    db.add_solve("4x4x4", 34.56, "D2 R2 U2", session_id)
 
     solve_times: list[tuple[Any, ...]] = db.get_solve_ids_and_times(session_id)
 

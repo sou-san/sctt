@@ -78,13 +78,15 @@ class Database:
         with self._get_connection() as conn:
             conn.execute(query, (id,))
 
-    def add_solve(self, time: float, scramble: str, session_id: int) -> int | None:
-        query_solve: str = "INSERT INTO solves (session_id, time, scramble, date) VALUES (?, ?, ?, DATETIME('now'));"
+    def add_solve(
+        self, event: str, time: float, scramble: str, session_id: int, penalty: str = ""
+    ) -> int | None:
+        query_solve: str = "INSERT INTO solves (event, time, penalty, scramble, date, session_id) VALUES (?, ?, ?, ?, DATETIME('now'), ?);"
         query_update: str = "UPDATE sessions SET updated_at = DATETIME('now') WHERE id = ?;"
 
         with self._get_connection() as conn:
             solve_id: int | None = conn.execute(
-                query_solve, (session_id, time, scramble)
+                query_solve, (event, time, penalty, scramble, session_id)
             ).lastrowid
             conn.execute(query_update, (session_id,))
 
