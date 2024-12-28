@@ -111,7 +111,7 @@ def test_get_solve_times(db: Database) -> None:
     db.add_solve("4x4x4", 23.45, "D2 R2 U2", session_id, "plus_2")
     db.add_solve("4x4x4", 34.56, "D2 R2 U2", session_id)
 
-    solve_times: list[tuple[Any, ...]] = db.get_solve_ids_and_times(session_id)
+    solve_times: list[tuple[Any, ...]] = db.get_solve_ids_and_times_and_penalties(session_id)
 
     assert len(solve_times) == 3
 
@@ -122,3 +122,7 @@ def test_get_solve_times(db: Database) -> None:
     assert solve_times[0][1] == 12.34
     assert solve_times[1][1] == 23.45
     assert solve_times[2][1] == 34.56
+
+    assert solve_times[0][2] == "dnf"
+    assert solve_times[1][2] == "plus_2"
+    assert solve_times[2][2] == ""

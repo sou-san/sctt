@@ -127,8 +127,8 @@ class Database:
         with self._get_connection() as conn:
             return conn.execute(query, (session_id,)).fetchall()
 
-    def get_solve_ids_and_times(self, session_id: int) -> list[Any]:
-        query: str = "SELECT id, time FROM solves WHERE session_id = ?;"
+    def get_solve_ids_and_times_and_penalties(self, session_id: int) -> list[Any]:
+        query: str = "SELECT id, time, penalty FROM solves WHERE session_id = ?;"
 
         with self._get_connection() as conn:
             return conn.execute(query, (session_id,)).fetchall()

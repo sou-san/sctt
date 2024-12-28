@@ -78,7 +78,9 @@ class Sctt(App[None]):
             yield Footer()
 
     def on_mount(self) -> None:
-        self.stats_widget.update(self.db.get_solve_ids_and_times(self.solve_buffer.session_id))
+        self.stats_widget.update(
+            self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
+        )
 
     def on_app_focus(self) -> None:
         keyboard.hook(self.timer_widget.key_events)
@@ -113,7 +115,7 @@ class Sctt(App[None]):
             raise ValueError("Failed to add solve to database.")
         else:
             self.query_one(StatsWidget).update(
-                self.db.get_solve_ids_and_times(self.solve_buffer.session_id)
+                self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
             )
 
         save_last_session_id(self.solve_buffer.session_id)
