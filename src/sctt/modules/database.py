@@ -132,3 +132,15 @@ class Database:
 
         with self._get_connection() as conn:
             return conn.execute(query, (session_id,)).fetchall()
+
+    def get_previous_solve_range(
+        self, session_id: int, solve_id: int, n: int
+    ) -> list[tuple[Any, ...]]:
+        query: str = """
+        SElECT *
+        FROM (SELECT * FROM solves WHERE session_id = ? AND id <= ? ORDER BY id DESC LIMIT ?)
+        ORDER BY id;
+        """
+
+        with self._get_connection() as conn:
+            return conn.execute(query, (session_id, solve_id, n)).fetchall()
