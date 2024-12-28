@@ -144,3 +144,9 @@ class Database:
 
         with self._get_connection() as conn:
             return conn.execute(query, (session_id, solve_id, n)).fetchall()
+
+    def change_solve_penalty(self, penalty: str, solve_id: int) -> None:
+        query: str = "UPDATE solves SET penalty = ? WHERE id = ?;"
+
+        with self._get_connection() as conn:
+            conn.execute(query, (penalty, solve_id))
