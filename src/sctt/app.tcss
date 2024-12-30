@@ -155,48 +155,6 @@ DialogScreen {
 StatsWidget {
     width: auto;
     height: 1fr;
-    background: #0D0D0D;
-    border: round #1a5e12;
-
-    .datatable--header {
-        text-style: none;
-        color: #0D0D0D;
-        background: #1a5e12;
-    }
-
-    .datatable--header-hover {
-        color: #0D0D0D;
-        background: #1a5e12;
-    }
-
-    .datatable--cursor {
-        color: #0D0D0D;
-        background: #1a5e12;
-    }
-
-    .datatable--even-row {
-        background: #0f0 10%;
-    }
-
-    &:focus {
-        background: #0D0D0D;
-        background-tint: 0%;
-        border: round #0f0;
-
-        .datatable--header {
-            background: #0f0;
-        }
-
-        .datatable--header-hover {
-            color: #0D0D0D;
-            background: #0f0;
-        }
-
-        .datatable--cursor {
-            color: #0D0D0D;
-            background: #0f0;
-        }
-    }
 }
 
 ScrambleWidget {
