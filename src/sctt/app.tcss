@@ -293,3 +293,17 @@ Toast {
     background: #0D0D0D;
     border: round #0f0;
 }
+
+Button {
+    text-style: none;
+    width: auto;
+    min-width: 5;
+    height: auto;
+    background: #0D0D0D 25%;
+    border: round #1a5e12;
+
+    &:focus {
+        text-style: none;
+        border: round #0f0;
+    }
+}
