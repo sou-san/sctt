@@ -16,8 +16,8 @@ class DialogScreen(ModalScreen[str]):
                 yield Label(self.text)
             with Center():
                 with Horizontal():
-                    yield Button("Cancel", id="cancel")
                     yield Button("Ok", id="ok")
+                    yield Button("Cancel", id="cancel")
 
     @on(Button.Pressed)
     def handle_button_pressed(self, event: Button.Pressed) -> None:
