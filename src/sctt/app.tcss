@@ -26,6 +26,11 @@ BlockingScreen {
 }
 
 MyDataTable {
+    width: auto;
+    height: auto;
+    background: #0D0D0D;
+    border: round #1a5e12;
+
     .datatable--header {
         text-style: none;
         color: #0D0D0D;
