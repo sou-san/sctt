@@ -113,10 +113,33 @@ InputScrambleScreen {
     }
 }
 
-                &:focus {
-                    border: round #0f0;
-                }
+DialogScreen {
+    Vertical {
+        align: center middle;
+        width: 40%;
+        height: auto;
+        padding: 2 4;
+        border: round #0f0;
+
+        Label {
+            text-align: center;
+            width: 1fr;
+            height: auto;
+            margin-bottom: 2;
+        }
+
+        Horizontal {
+            align: center middle;
+            width: auto;
+            height: auto;
+
+            Button {
+                width: 10;
+                margin: 0 4;
             }
+        }
+    }
+}
 
             #ok {
                 margin-right: 4;
