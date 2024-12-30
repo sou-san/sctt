@@ -106,10 +106,12 @@ InputScrambleScreen {
             margin-bottom: 1;
 
             Button {
-                text-style: none;
-                background: #0D0D0D;
-                border: round #1a5e12;
-                margin: 0;
+                width: 10;
+                margin: 0 4;
+            }
+        }
+    }
+}
 
                 &:focus {
                     border: round #0f0;
