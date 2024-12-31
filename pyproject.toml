@@ -11,7 +11,6 @@ license = { file = "LICENSE" }
 keywords = ["sctt", "speed cube timer", "scrambler", "cli", "tui", "terminal", "tool"]
 dependencies = [
     "keyboard>=0.13.5",
-    "pandas>=2.2.3",
     "rich>=13.9.4",
     "textual>=1.0.0",
     "textual-pyfiglet>=0.5.5",
