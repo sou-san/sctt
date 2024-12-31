@@ -234,6 +234,27 @@ SolveScreen {
     }
 }
 
+AOScreen {
+    Vertical {
+        width: 55%;
+        height: auto;
+        background: #0D0D0D;
+        padding: 1 2;
+        border: round #0f0;
+        border-title-style: bold;
+        border-title-color: #fff 80%;
+
+        MyDataTable {
+            max-width: 100%;
+        }
+    }
+
+    Footer {
+        padding-left: 2;
+        margin-bottom: 1;
+    }
+}
+
 StatsWidget {
     width: auto;
     height: 1fr;
