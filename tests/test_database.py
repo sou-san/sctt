@@ -59,9 +59,11 @@ def test_add_solve(db: Database) -> None:
     assert len(solves) == 1, "ソルブは1つだけ存在するべき"
 
     assert solves[0][0] == solve_id, "ソルブのIDが一致するべき"
-    assert solves[0][1] == session_id, "ソルブのセッションIDが一致するべき"
+    assert solves[0][1] == "3x3x3", "ソルブのイベントが一致するべき"
     assert solves[0][2] == 12.34, "ソルブのタイムが一致するべき"
-    assert solves[0][3] == "D2 R2 U2", "ソルブのスクランブルが一致するべき"
+    assert solves[0][3] == "dnf", "ソルブのペナルティが一致するべき"
+    assert solves[0][4] == "D2 R2 U2", "ソルブのスクランブルが一致するべき"
+    assert solves[0][6] == session_id, "ソルブのセッションIDが一致するべき"
 
 
 def test_remove_solve(db: Database) -> None:
