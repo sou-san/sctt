@@ -139,3 +139,12 @@ class Sctt(App[None]):
     def set_solve_buffer_event(self, message: ScrambleWidget.Changed) -> None:
         if (n := message.cube_size) in {2, 3, 4, 5, 6, 7}:
             self.solve_buffer.event = f"{n}x{n}x{n}"
+
+    def apply_solve_penalty(self, solve_id: int, penalty: str = "") -> None:
+        saved_penalty: str = self.db.get_solve(self.solve_buffer.session_id, solve_id)[3]
+
+        if penalty != saved_penalty:
+            self.db.change_solve_penalty(penalty, solve_id)
+            self.query_one(StatsWidget).update(
+                self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
+            )
