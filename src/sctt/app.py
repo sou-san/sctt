@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import keyboard
+from rich.text import Text
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
@@ -11,6 +12,7 @@ from textual.widgets import Footer
 
 from sctt.locations import get_cache_file
 from sctt.modules.database import Database
+from sctt.screens.ao_screen import AOScreen
 from sctt.screens.blocking_screen import MIN_HEIGHT, MIN_WIDTH, BlockingScreen
 from sctt.screens.solve_screen import SolveScreen
 from sctt.widgets.cube_net_widget import CubeNetWidget
@@ -184,4 +186,12 @@ class Sctt(App[None]):
         date = convert_utc_to_local(date)
         self.push_screen(
             SolveScreen(solve_id, event, time, penalty, scramble, date), handle_result
+        )
+
+    def show_ao_screen(self, ao_value: Text, n: int, solve_id: int) -> None:
+        self.push_screen(
+            AOScreen(
+                self.db.get_previous_solve_range(self.solve_buffer.session_id, solve_id, n),
+                ao_value,
+            )
         )
