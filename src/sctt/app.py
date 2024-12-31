@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 import keyboard
@@ -15,6 +16,14 @@ from sctt.widgets.cube_net_widget import CubeNetWidget
 from sctt.widgets.scramble_widget import ScrambleWidget
 from sctt.widgets.stats_widget import StatsWidget
 from sctt.widgets.timer_widget import TimerWidget
+
+
+def convert_utc_to_local(utc_time: str) -> str:
+    utc_dt: datetime = datetime.strptime(utc_time, "%Y-%m-%d %H:%M:%S")
+    utc_dt = utc_dt.replace(tzinfo=timezone.utc)
+    local_dt: datetime = utc_dt.astimezone()
+
+    return local_dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def get_last_session_id() -> int:
