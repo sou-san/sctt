@@ -134,3 +134,8 @@ class Sctt(App[None]):
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
             self.query_one(ScrambleWidget).set_inputted_scramble(None)
+
+    @on(ScrambleWidget.Changed)
+    def set_solve_buffer_event(self, message: ScrambleWidget.Changed) -> None:
+        if (n := message.cube_size) in {2, 3, 4, 5, 6, 7}:
+            self.solve_buffer.event = f"{n}x{n}x{n}"
