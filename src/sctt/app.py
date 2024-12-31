@@ -106,6 +106,10 @@ class Sctt(App[None]):
 
         return solve_id
 
+    def reset_solve_buffer(self) -> None:
+        self.solve_buffer = SolveBuffer()
+        self.solve_buffer.session_id = get_last_session_id()
+
     @on(TimerWidget.Solved)
     def update_stats(self, message: TimerWidget.Solved) -> None:
         self.solve_buffer.time = message.time_
@@ -119,10 +123,7 @@ class Sctt(App[None]):
             )
 
         save_last_session_id(self.solve_buffer.session_id)
-
-        # reset
-        self.solve_buffer = SolveBuffer()
-        self.solve_buffer.session_id = get_last_session_id()
+        self.reset_solve_buffer()
 
     @on(ScrambleWidget.Changed)
     def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
