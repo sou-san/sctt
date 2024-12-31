@@ -8,6 +8,7 @@ from textual.widgets import Footer, Label
 from textual_pyfiglet.pyfiglet import figlet_format
 
 from sctt.modules.timer import Timer
+from sctt.utils import convert_utc_to_local
 from sctt.widgets.my_datatable import MyDataTable
 
 
@@ -45,7 +46,7 @@ class AOScreen(ModalScreen[None]):
                 str(solve[1]),
                 self.format_apply_penalty(solve[2], solve[3]),
                 str(solve[4]),
-                str(solve[5]),
+                str(convert_utc_to_local(solve[5])),
             )
 
         self.query_one(Label).update(figlet_format(str(self.ao_value), "small"))
