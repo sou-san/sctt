@@ -141,14 +141,96 @@ DialogScreen {
     }
 }
 
-            #ok {
-                margin-right: 4;
-            }
 
-            #cancel {
-                margin-left: 4;
+SolveScreen {
+    Body {
+        align: center middle;
+        width: 55%;
+        height: auto;
+        max-height: 25;
+        padding: 1 2;
+        border: round #0f0;
+        border-title-style: bold;
+        border-title-color: #fff 80%;
+
+        SolveTime {
+            width: auto;
+            height: auto;
+        }
+
+        Buttons {
+            width: auto;
+            height: auto;
+
+            Label {
+                width: 5;
             }
         }
+
+        SolveData {
+            align: center middle;
+            width: 95%;
+            height: auto;
+            max-height: 11;
+
+            Horizontal {
+                width: 1fr;
+                height: auto;
+
+                .label {
+                    content-align: center middle;
+                    text-align: left;
+                    width: 11;
+                    height: auto;
+                    border: blank;
+                }
+
+                .value {
+                    text-align: left;
+                    width: 1fr;
+                    height: auto;
+                    padding: 0 1;
+                    border: round #1a5e12;
+
+                    &:focus {
+                        border: round #0f0;
+                    }
+                }
+            }
+
+            .middle {
+                height: auto;
+                max-height: 5;
+
+                .label {
+                    content-align: left middle;
+                    height: 100%;
+                    max-height: 5;
+                }
+
+                VerticalScroll {
+                    align: left middle;
+                    height: auto;
+                    max-height: 5;
+
+                    Label {
+                        width: 1fr;
+                        height: auto;
+                        max-height: 5;
+                    }
+                }
+            }
+        }
+    }
+
+    Button {
+        width: auto;
+        height: auto;
+    }
+
+    Footer {
+        padding-left: 2;
+        margin-bottom: 1;
     }
 }
 
