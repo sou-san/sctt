@@ -195,3 +195,21 @@ class Sctt(App[None]):
                 ao_value,
             )
         )
+
+    @on(StatsWidget.CellSelected)
+    def handle_stats_widget_cell_selected(self, message: StatsWidget.CellSelected) -> None:
+        row_key, column_key = message.cell_key
+
+        if row_key.value is not None:
+            solve_id: int = int(row_key.value)
+        else:
+            raise ValueError("Invalid solve_id.")
+
+        cell_value: Text = self.query_one(StatsWidget).get_cell(row_key, column_key)
+
+        if column_key == "time":
+            self.show_solve_screen(solve_id)
+        elif column_key == "ao5" and cell_value != Text("-"):
+            self.show_ao_screen(cell_value, 5, solve_id)
+        elif column_key == "ao12" and cell_value != Text("-"):
+            self.show_ao_screen(cell_value, 12, solve_id)
