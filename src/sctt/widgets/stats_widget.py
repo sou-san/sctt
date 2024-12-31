@@ -1,6 +1,6 @@
+import math
 from typing import Any
 
-import pandas as pd
 from rich.text import Text
 
 from sctt.modules.calculate_ao import calculate_ao
@@ -10,7 +10,7 @@ from sctt.widgets.my_datatable import MyDataTable
 
 class StatsWidget(MyDataTable[Text]):
     def on_mount(self) -> None:
-        self.cursor_type = "none"
+        self.cursor_type = "cell"
         self.zebra_stripes = True
 
         # header
@@ -19,28 +19,52 @@ class StatsWidget(MyDataTable[Text]):
         self.add_column("ao5", key="ao5")
         self.add_column("ao12", key="ao12")
 
+    @staticmethod
+    def _format_ao_values(solves: list[tuple[Any, ...]], n: int) -> list[str]:
+        result: list[str] = []
+
+        for i in range(1, len(solves) + 1):
+            ao_value: float | str = calculate_ao([solve[1:] for solve in solves[i - n : i]], n)
+
+            if isinstance(ao_value, float):
+                if math.isnan(ao_value):
+                    result.append("-")
+                else:
+                    result.append(Timer.format_time(ao_value, 2))
+            else:
+                result.append(str(ao_value))
+
+        return result
+
     def update(self, solves: list[tuple[Any, ...]]) -> None:
         self.clear()
 
-        num_solves: int = len(solves)
+        times: list[str] = []
 
-        df: pd.DataFrame = pd.DataFrame()
-        df["time"] = [solve[1] for solve in solves]
-        df["ao5"] = df["time"].rolling(window=5).apply(calculate_ao, raw=True)
-        df["ao12"] = df["time"].rolling(window=12).apply(calculate_ao, raw=True)
+        for solve in solves:
+            match solve[2]:
+                case "":
+                    times.append(Timer.format_time(solve[1], 2))
+                case "plus_2":
+                    times.append(f"{Timer.format_time(solve[1] + 2, 2)}+")
+                case "dnf":
+                    times.append("DNF")
+                case _:
+                    raise ValueError(f"Invalid penalty: {solve[2]}")
 
-        df = df.map(Timer().format_time, na_action="ignore")
-        df = df.fillna("-")
+        num_solves: list[int] = list(reversed(range(1, len(solves) + 1)))
+        times = list(reversed(times))
+        ao5_results: list[str] = list(reversed(self._format_ao_values(solves, 5)))
+        ao12_results: list[str] = list(reversed(self._format_ao_values(solves, 12)))
+        solve_ids: list[str] = list(reversed([str(solve[0]) for solve in solves]))
 
-        df["no."] = list(range(1, num_solves + 1))
-        df = df.loc[:, ["no.", "time", "ao5", "ao12"]]
-
-        # 逆順にする
-        df = df[::-1]
-        solve_ids: list[int] = list(reversed([int(solve[0]) for solve in solves]))
-
-        for solve_id, row in zip(
-            solve_ids, df.itertuples(index=False, name=None), strict=True
+        for num_solve, time, ao5, ao12, solve_id in zip(
+            num_solves, times, ao5_results, ao12_results, solve_ids, strict=True
         ):
-            styled_row = [Text(str(cell), justify="center") for cell in row]
-            self.add_row(*styled_row, key=str(solve_id))
+            self.add_row(
+                Text(str(num_solve), justify="center"),
+                Text(time, justify="center"),
+                Text(ao5, justify="center"),
+                Text(ao12, justify="center"),
+                key=solve_id,
+            )
