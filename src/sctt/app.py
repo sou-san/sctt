@@ -12,6 +12,7 @@ from textual.widgets import Footer
 from sctt.locations import get_cache_file
 from sctt.modules.database import Database
 from sctt.screens.blocking_screen import MIN_HEIGHT, MIN_WIDTH, BlockingScreen
+from sctt.screens.solve_screen import SolveScreen
 from sctt.widgets.cube_net_widget import CubeNetWidget
 from sctt.widgets.scramble_widget import ScrambleWidget
 from sctt.widgets.stats_widget import StatsWidget
@@ -157,3 +158,30 @@ class Sctt(App[None]):
             self.query_one(StatsWidget).update(
                 self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
             )
+
+    def show_solve_screen(self, solve_id: int) -> None:
+        def handle_result(result: str | None) -> None:
+            match result:
+                case "ok":
+                    self.apply_solve_penalty(solve_id, "")
+                case "plus_2":
+                    self.apply_solve_penalty(solve_id, "plus_2")
+                case "dnf":
+                    self.apply_solve_penalty(solve_id, "dnf")
+                case "remove":
+                    session_id: int = self.solve_buffer.session_id
+
+                    self.db.remove_solve(solve_id, session_id)
+                    self.query_one(StatsWidget).update(
+                        self.db.get_solve_ids_and_times_and_penalties(session_id)
+                    )
+                case _:
+                    pass
+
+        _, event, time, penalty, scramble, date, _ = self.db.get_solve(
+            self.solve_buffer.session_id, solve_id
+        )
+        date = convert_utc_to_local(date)
+        self.push_screen(
+            SolveScreen(solve_id, event, time, penalty, scramble, date), handle_result
+        )
