@@ -317,6 +317,8 @@ SessionManagerScreen {
 StatsWidget {
     width: auto;
     height: 1fr;
+    border-title-style: bold;
+    border-title-color: #fff 80%;
 }
 
 ScrambleWidget {

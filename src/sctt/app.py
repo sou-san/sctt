@@ -13,6 +13,7 @@ from sctt.locations import get_cache_file
 from sctt.modules.database import Database
 from sctt.screens.ao_screen import AOScreen
 from sctt.screens.blocking_screen import MIN_HEIGHT, MIN_WIDTH, BlockingScreen
+from sctt.screens.session_manager_screen import SessionManagerScreen
 from sctt.screens.solve_screen import SolveScreen
 from sctt.utils import convert_utc_to_local
 from sctt.widgets.cube_net_widget import CubeNetWidget
@@ -49,6 +50,7 @@ class Sctt(App[None]):
     BINDINGS = [
         Binding("q", "quit", "Quit"),
         Binding("space", "", "Start / Stop"),  # Dummy key binding for the keyboard lib.
+        Binding("s", "show_session_manager", "Session Manager"),
     ]
 
     def __init__(self, db: Database) -> None:
@@ -58,6 +60,8 @@ class Sctt(App[None]):
 
         if not self.db.get_all_sessions():
             session_id: int | None = self.db.create_session("session 1")
+            self.db.create_session("session 2")
+            self.db.create_session("session 3")
 
             if session_id is None:
                 raise ValueError("Failed to create session.")
@@ -82,6 +86,7 @@ class Sctt(App[None]):
             yield Footer()
 
     def on_mount(self) -> None:
+        self.stats_widget.border_title = self.db.get_session(self.solve_buffer.session_id)[1]
         self.stats_widget.update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
@@ -205,3 +210,19 @@ class Sctt(App[None]):
             self.show_ao_screen(cell_value, 5, solve_id)
         elif column_key == "ao12" and cell_value != Text("-"):
             self.show_ao_screen(cell_value, 12, solve_id)
+
+    def action_show_session_manager(self) -> None:
+        def handle_result(result: int | None) -> None:
+            if result is not None:
+                session_id: int = result
+
+                save_last_session_id(session_id)
+                self.reset_solve_buffer()
+                self.query_one(TimerWidget).reset()
+                self.stats_widget.border_title = self.db.get_session(session_id)[1]
+                self.query_one(StatsWidget).update(
+                    self.db.get_solve_ids_and_times_and_penalties(session_id)
+                )
+                self.update_scramble()
+
+        self.push_screen(SessionManagerScreen(self.db), handle_result)
