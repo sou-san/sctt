@@ -34,6 +34,9 @@ class TimerWidget(Static):
         else:
             self.set_interval(1 / 60, self.set_time)
 
+    def reset(self) -> None:
+        self.timer.reset()
+
     def style_time(self) -> str:
         decimal_places: int
 
