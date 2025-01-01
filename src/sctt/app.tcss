@@ -257,6 +257,63 @@ AOScreen {
     }
 }
 
+InputSessionScreen {
+    Body {
+        align: center middle;
+        width: 30%;
+        height: auto;
+        background: #0D0D0D;
+        padding: 1 2;
+        border: round #0f0;
+
+        Label {
+            text-align: center;
+            width: 100%;
+            height: auto;
+            margin-bottom: 1;
+        }
+
+        Input {
+            width: 100%;
+            height: auto;
+            background: #0D0D0D;
+            border: round #0f0;
+        }
+    }
+}
+
+SessionManagerScreen {
+    Body {
+        align: center middle;
+        width: auto;
+        max-width: 81;
+        height: auto;
+        background: #0D0D0D;
+        padding: 1 2;
+        border: round #0f0;
+        border-title-style: bold;
+        border-title-color: #fff 80%;
+
+        Label {
+            width: auto;
+            height: auto;
+            margin-bottom: 1;
+        }
+
+        MyDataTable {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 20;
+        }
+    }
+
+    Footer {
+        padding-left: 2;
+        margin-bottom: 1;
+    }
+}
+
 StatsWidget {
     width: auto;
     height: 1fr;
