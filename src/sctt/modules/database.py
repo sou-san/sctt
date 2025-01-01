@@ -150,3 +150,9 @@ class Database:
 
         with self._get_connection() as conn:
             conn.execute(query, (penalty, solve_id))
+
+    def rename_session(self, name: str, session_id: int) -> None:
+        query: str = "UPDATE sessions SET name = ? WHERE id = ?;"
+
+        with self._get_connection() as conn:
+            conn.execute(query, (name, session_id))
