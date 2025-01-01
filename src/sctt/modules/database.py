@@ -103,11 +103,11 @@ class Database:
             conn.execute(query, (solve_id,))
             self._update_session_updated_at(session_id, conn)
 
-    def get_session(self, id: int) -> list[tuple[Any, ...]]:
+    def get_session(self, id: int) -> tuple[Any, ...]:
         query: str = "SELECT * FROM sessions WHERE id = ?;"
 
         with self._get_connection() as conn:
-            return conn.execute(query, (id,)).fetchall()
+            return conn.execute(query, (id,)).fetchall()[0]
 
     def get_solve(self, session_id: int, solve_id: int) -> tuple[Any, ...]:
         query: str = "SELECT * FROM solves WHERE session_id = ? AND id = ?;"
