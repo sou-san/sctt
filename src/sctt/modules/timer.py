@@ -24,6 +24,14 @@ class Timer:
         self._press_time: float = 0.0
         self._was_key_released_after_stop: bool = False
 
+    def reset(self) -> None:
+        self.state = TimerState.STOPPED
+
+        self._start_time = 0.0
+        self._elapsed_time = 0.0
+        self._press_time = 0.0
+        self._was_key_released_after_stop = False
+
     def on_press(self) -> None:
         match self.state:
             case TimerState.STOPPED:
