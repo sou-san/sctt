@@ -156,3 +156,9 @@ class Database:
 
         with self._get_connection() as conn:
             conn.execute(query, (name, session_id))
+
+    def get_solve_count(self, session_id: int) -> int:
+        query: str = "SELECT COUNT(*) FROM solves WHERE session_id = ?;"
+
+        with self._get_connection() as conn:
+            return conn.execute(query, (session_id,)).fetchall()[0][0]
