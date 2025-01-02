@@ -225,4 +225,6 @@ class Sctt(App[None]):
                 )
                 self.update_scramble()
 
-        self.push_screen(SessionManagerScreen(self.db), handle_result)
+        self.push_screen(
+            SessionManagerScreen(self.db, self.solve_buffer.session_id), handle_result
+        )

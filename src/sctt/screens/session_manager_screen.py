@@ -48,9 +48,10 @@ class SessionManagerScreen(ModalScreen[int]):
         Binding("r", "rename_session", "Rename"),
     ]
 
-    def __init__(self, database: Database) -> None:
+    def __init__(self, database: Database, current_session_id: int) -> None:
         super().__init__()
         self.db: Database = database
+        self.current_session_id: int = current_session_id
 
     def compose(self) -> ComposeResult:
         with Body():
@@ -114,6 +115,14 @@ class SessionManagerScreen(ModalScreen[int]):
                     # 一度、カーソルを移動して再度、先ほど RowDoesNotExist が発生した行を選択すると RowDoesNotExist は発生しなくなる。
                     # これは textual のバグのような気がする。
                     pass
+
+                if not self.db.get_all_sessions():
+                    session_id: int | None = self.db.create_session("session 1")
+
+                    if session_id is None:
+                        raise ValueError("Failed to create session.")
+
+                    self.dismiss(session_id)
 
         self.app.push_screen(
             DialogScreen("Are you sure you want to delete this session?"), handle_result
