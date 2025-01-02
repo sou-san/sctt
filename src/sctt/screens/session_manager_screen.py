@@ -123,6 +123,8 @@ class SessionManagerScreen(ModalScreen[int]):
                         raise ValueError("Failed to create session.")
 
                     self.dismiss(session_id)
+                elif self.session_id == self.current_session_id:
+                    self.dismiss(self.db.get_all_sessions()[0][0])
 
         self.app.push_screen(
             DialogScreen("Are you sure you want to delete this session?"), handle_result
