@@ -47,7 +47,7 @@ class MySelect(Select[SelectType], inherit_bindings=False):
 
 
 class ScrambleSettingsSelect(Vertical):
-    SCRAMBLE_OPTIONS: list[tuple[str, ScrambleMode]] = [
+    SCRAMBLE_MODE_OPTIONS: list[tuple[str, ScrambleMode]] = [
         ("Gen", ScrambleMode.GENERATE),
         ("Input", ScrambleMode.INPUT),
     ]
@@ -62,8 +62,8 @@ class ScrambleSettingsSelect(Vertical):
     ]
 
     def compose(self) -> ComposeResult:
-        yield MySelect(self.SCRAMBLE_OPTIONS, allow_blank=False, id="scramble_options")
         yield MySelect(self.CUBE_SIZE_OPTIONS, allow_blank=False)
+        yield MySelect(self.SCRAMBLE_MODE_OPTIONS, allow_blank=False, id="scramble_options")
 
 
 class ScrambleDisplay(Static):
@@ -96,7 +96,7 @@ class ScrambleWidget(Horizontal):
         if scramble is None:
             self.scramble_mode = ScrambleMode.GENERATE
             self.query_one(MySelect[ScrambleMode]).set_options(
-                self.query_one(ScrambleSettingsSelect).SCRAMBLE_OPTIONS
+                self.query_one(ScrambleSettingsSelect).SCRAMBLE_MODE_OPTIONS
             )
             self.update()
         else:
