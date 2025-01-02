@@ -106,6 +106,7 @@ class SessionManagerScreen(ModalScreen[int]):
         def handle_result(result: str | None) -> None:
             if result == "ok":
                 self.db.delete_session(self.session_id)
+
                 try:
                     self.query_one(MyDataTable[str]).remove_row(str(self.session_id))
                 except RowDoesNotExist:
