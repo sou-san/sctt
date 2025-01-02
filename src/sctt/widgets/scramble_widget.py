@@ -52,7 +52,7 @@ class ScrambleSettingsSelect(Vertical):
         ("Input", ScrambleMode.INPUT),
     ]
 
-    CUBE_SIZE_OPTIONS: list[tuple[str, int]] = [
+    SOLVE_EVENT_OPTIONS: list[tuple[str, int]] = [
         ("3x3x3", 3),  # Default value
         ("2x2x2", 2),
         ("4x4x4", 4),
@@ -62,8 +62,8 @@ class ScrambleSettingsSelect(Vertical):
     ]
 
     def compose(self) -> ComposeResult:
-        yield MySelect(self.CUBE_SIZE_OPTIONS, allow_blank=False)
         yield MySelect(self.SCRAMBLE_MODE_OPTIONS, allow_blank=False, id="scramble_options")
+        yield MySelect(self.SOLVE_EVENT_OPTIONS, allow_blank=False)
 
 
 class ScrambleDisplay(Static):
