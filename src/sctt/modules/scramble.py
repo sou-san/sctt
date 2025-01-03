@@ -1,7 +1,10 @@
 import random
-from typing import Literal
 
-CUBE_SIZE_VARIANT = Literal[2, 3, 4, 5, 6, 7]
+CUBE_SIZE_VARIANT: tuple[int, ...] = (2, 3, 4, 5, 6, 7)
+
+
+def validate_cube_size(cube_size: int) -> bool:
+    return cube_size in CUBE_SIZE_VARIANT
 
 
 def _generate_2_layer_turn_moves(moves: list[str]) -> list[str]:
@@ -22,11 +25,16 @@ def _generate_3_layer_turn_moves(moves: list[str]) -> list[str]:
     return ["3" + move for move in moves if "w" in move]
 
 
-def generate_scramble(cube_size: CUBE_SIZE_VARIANT = 3) -> str:
+def generate_scramble(cube_size: int = 3) -> str:
     """
     Args:
-        cube_size: 例 3x3x3 -> 3 (デフォルト値)
+        cube_size: 2 (2x2x2) から 7 (7x7x7) までのサイズを指定する。例 3x3x3 -> 3 (デフォルト値)
     """
+
+    if not validate_cube_size(cube_size):
+        raise ValueError(
+            f"Invalid cube size: {cube_size}. Supported sizes are between 2 and 7."
+        )
 
     moves: list[str] = ["L", "R", "U", "D", "F", "B"]
     # 方向(時計回り 90 度回転、反時計回り 90 度回転、180 度回転)
