@@ -106,11 +106,7 @@ class ScrambleWidget(Horizontal):
     def update(self) -> None:
         match self.scramble_mode:
             case ScrambleMode.GENERATE:
-                match self.cube_size:
-                    case 2 | 3 | 4 | 5 | 6 | 7:
-                        self.scramble = generate_scramble(self.cube_size)
-                    case _:
-                        pass
+                self.scramble = generate_scramble(self.cube_size)
             case ScrambleMode.INPUT:
                 self.app.push_screen(InputScrambleScreen(), self.set_inputted_scramble)
 
