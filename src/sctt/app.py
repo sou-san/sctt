@@ -139,10 +139,13 @@ class Sctt(App[None]):
         try:
             self.cube_net_widget.update_cube_net(message.scramble, message.cube_size)
 
-            self.solve_buffer.scramble = message.scramble
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
             self.query_one(ScrambleWidget).set_inputted_scramble(None)
+
+    @on(ScrambleWidget.Changed)
+    def set_solve_buffer_scramble(self, message: ScrambleWidget.Changed) -> None:
+        self.solve_buffer.scramble = message.scramble
 
     @on(ScrambleWidget.Changed)
     def set_solve_buffer_event(self, message: ScrambleWidget.Changed) -> None:
