@@ -94,10 +94,10 @@ class ScrambleWidget(Horizontal):
 
     def set_inputted_scramble(self, scramble: str | None) -> None:
         if scramble is None:
-            self.scramble_mode = ScrambleMode.GENERATE
             self.query_one(MySelect[ScrambleMode]).set_options(
                 self.query_one(ScrambleSettingsSelect).SCRAMBLE_MODE_OPTIONS
             )
+            self.scramble_mode = ScrambleMode.GENERATE
             self.update()
         else:
             self.scramble_mode = ScrambleMode.INPUT
