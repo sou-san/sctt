@@ -127,7 +127,7 @@ class Sctt(App[None]):
         if solve_id is None:
             raise ValueError("Failed to add solve to database.")
         else:
-            self.query_one(StatsWidget).update(
+            self.stats_widget.update(
                 self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
             )
 
@@ -157,7 +157,7 @@ class Sctt(App[None]):
 
         if penalty != saved_penalty:
             self.db.change_solve_penalty(penalty, solve_id)
-            self.query_one(StatsWidget).update(
+            self.stats_widget.update(
                 self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
             )
 
@@ -174,7 +174,7 @@ class Sctt(App[None]):
                     session_id: int = self.solve_buffer.session_id
 
                     self.db.remove_solve(solve_id, session_id)
-                    self.query_one(StatsWidget).update(
+                    self.stats_widget.update(
                         self.db.get_solve_ids_and_times_and_penalties(session_id)
                     )
                 case _:
@@ -205,7 +205,7 @@ class Sctt(App[None]):
         else:
             raise ValueError("Invalid solve_id.")
 
-        cell_value: Text = self.query_one(StatsWidget).get_cell(row_key, column_key)
+        cell_value: Text = self.stats_widget.get_cell(row_key, column_key)
 
         if column_key == "time":
             self.show_solve_screen(solve_id)
@@ -223,7 +223,7 @@ class Sctt(App[None]):
                 self.reset_solve_buffer()
                 self.query_one(TimerWidget).reset()
                 self.stats_widget.border_title = self.db.get_session(session_id)[1]
-                self.query_one(StatsWidget).update(
+                self.stats_widget.update(
                     self.db.get_solve_ids_and_times_and_penalties(session_id)
                 )
                 self.update_scramble()
