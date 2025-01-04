@@ -100,7 +100,6 @@ class ScrambleWidget(Horizontal):
             self.scramble_mode = ScrambleMode.GENERATE
             self.update()
         else:
-            self.scramble_mode = ScrambleMode.INPUT
             self.scramble = scramble.strip()
 
     def update(self) -> None:
