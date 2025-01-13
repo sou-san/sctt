@@ -1,3 +1,7 @@
+![Python version](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)
+![PyPi version](https://img.shields.io/badge/pypi%20package-v0.2.1-green.svg)
+![OS support](https://img.shields.io/badge/OS-Linux%20%7C%20Windows-red.svg)
+
 # SpeedCubeTimer-TUI (sctt)
 
 ![sctt_screenshot](https://github.com/user-attachments/assets/d5e05bc7-801d-42ba-a8ee-752c30ad5313)
