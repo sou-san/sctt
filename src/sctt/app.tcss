@@ -332,7 +332,7 @@ ScrambleWidget {
     }
 
     ScrambleSettingsSelect {
-        width: 12;
+        width: 15;
         height: 1fr;
         border: round #1a5e12;
 
@@ -369,6 +369,7 @@ ScrambleWidget {
             }
 
             SelectOverlay {
+                max-height: 13;
                 background: $background 10%;
                 border: round #0f0;
                 padding: 0;

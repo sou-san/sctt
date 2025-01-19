@@ -23,6 +23,20 @@ class ScrambleMode(StrEnum):
     INPUT = "Input"
 
 
+class SolveEvent(StrEnum):
+    THREE = "3x3x3"  # Default value
+    TWO = "2x2x2"
+    FOUR = "4x4x4"
+    FIVE = "5x5x5"
+    SIX = "6x6x6"
+    SEVEN = "7x7x7"
+    THREE_OH = "3x3x3 oh"  # One-Handed
+    THREE_FM = "3x3x3 fm"  # Fewest Moves
+    THREE_BLD = "3x3x3 bld"  # Blindfolded
+    FOUR_BLD = "4x4x4 bld"  # Blindfolded
+    FIVE_BLD = "5x5x5 bld"  # Blindfolded
+
+
 class MySelect(Select[SelectType], inherit_bindings=False):
     BINDINGS = [
         Binding("enter", "show_overlay", "Show Overlay", show=False),
@@ -50,14 +64,8 @@ class ScrambleSettingsSelect(Vertical):
     SCRAMBLE_MODE_OPTIONS: list[tuple[ScrambleMode, ScrambleMode]] = [
         (mode, mode) for mode in ScrambleMode
     ]
-
-    SOLVE_EVENT_OPTIONS: list[tuple[str, int]] = [
-        ("3x3x3", 3),  # Default value
-        ("2x2x2", 2),
-        ("4x4x4", 4),
-        ("5x5x5", 5),
-        ("6x6x6", 6),
-        ("7x7x7", 7),
+    SOLVE_EVENT_OPTIONS: list[tuple[SolveEvent, SolveEvent]] = [
+        (event, event) for event in SolveEvent
     ]
 
     def compose(self) -> ComposeResult:
@@ -73,10 +81,18 @@ class ScrambleWidget(Horizontal):
     scramble: reactive[str] = reactive("", init=False, always_update=True)
 
     class Changed(Message):
-        def __init__(self, scramble: str, cube_size: int) -> None:
+        def __init__(self, scramble: str, solve_event: SolveEvent) -> None:
             super().__init__()
             self.scramble: str = scramble
-            self.cube_size: int = cube_size
+            self.solve_event: SolveEvent = solve_event
+
+    @staticmethod
+    def get_cube_size(solve_event: SolveEvent) -> int:
+        """
+        Args: solve_event (str): 3x3x3 -> 3, 4x4x4 bld -> 4
+        """
+
+        return int(solve_event[0])
 
     def compose(self) -> ComposeResult:
         yield ScrambleSettingsSelect()
@@ -84,12 +100,12 @@ class ScrambleWidget(Horizontal):
             yield ScrambleDisplay()
 
     def on_mount(self) -> None:
-        self.cube_size: int = 3
+        self.solve_event: SolveEvent = SolveEvent.THREE
         self.query_one(VerticalScroll).border_title = f"sctt v{SCTT_VERSION}"
 
     def watch_scramble(self, scramble: str) -> None:
         self.query_one(ScrambleDisplay).update(scramble)
-        self.post_message(self.Changed(scramble, self.cube_size))
+        self.post_message(self.Changed(scramble, self.solve_event))
 
     def set_inputted_scramble(self, scramble: str | None) -> None:
         if scramble is None:
@@ -104,21 +120,18 @@ class ScrambleWidget(Horizontal):
     def update(self) -> None:
         match self.scramble_mode:
             case ScrambleMode.GENERATE:
-                self.scramble = generate_scramble(self.cube_size)
+                self.scramble = generate_scramble(self.get_cube_size(self.solve_event))
             case ScrambleMode.INPUT:
                 self.app.push_screen(InputScrambleScreen(), self.set_inputted_scramble)
 
     @on(MySelect.Changed)
     def handle_my_select_changed(self, event: MySelect.Changed) -> None:
         match event.value:
-            case ScrambleMode.GENERATE:
-                self.scramble_mode = ScrambleMode.GENERATE
-                self.update()
-            case ScrambleMode.INPUT:
-                self.scramble_mode = ScrambleMode.INPUT
-                self.update()
-            case 2 | 3 | 4 | 5 | 6 | 7:
-                self.cube_size = event.value
-                self.update()
+            case ScrambleMode():
+                self.scramble_mode = event.value
+            case SolveEvent():
+                self.solve_event = event.value
             case _:
-                pass
+                raise ValueError(f"Invalid selected value: {event.value}")
+
+        self.update()

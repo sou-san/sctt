@@ -137,7 +137,10 @@ class Sctt(App[None]):
     @on(ScrambleWidget.Changed)
     def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
         try:
-            self.cube_net_widget.update_cube_net(message.scramble, message.cube_size)
+            self.cube_net_widget.update_cube_net(
+                message.scramble,
+                self.query_one(ScrambleWidget).get_cube_size(message.solve_event),
+            )
 
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
@@ -149,8 +152,7 @@ class Sctt(App[None]):
 
     @on(ScrambleWidget.Changed)
     def set_solve_buffer_event(self, message: ScrambleWidget.Changed) -> None:
-        if (n := message.cube_size) in {2, 3, 4, 5, 6, 7}:
-            self.solve_buffer.event = f"{n}x{n}x{n}"
+        self.solve_buffer.event = message.solve_event
 
     def apply_solve_penalty(self, solve_id: int, penalty: str = "") -> None:
         saved_penalty: str = self.db.get_solve(self.solve_buffer.session_id, solve_id)[3]
