@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import StrEnum
 from typing import Iterable
 
 from rich.console import RenderableType
@@ -18,9 +18,9 @@ from sctt.version import SCTT_VERSION
 from sctt.widgets.my_vertical_scroll import MyVerticalScroll
 
 
-class ScrambleMode(Enum):
-    GENERATE = auto()
-    INPUT = auto()
+class ScrambleMode(StrEnum):
+    GENERATE = "Generate"
+    INPUT = "Input"
 
 
 class MySelect(Select[SelectType], inherit_bindings=False):
@@ -47,9 +47,8 @@ class MySelect(Select[SelectType], inherit_bindings=False):
 
 
 class ScrambleSettingsSelect(Vertical):
-    SCRAMBLE_MODE_OPTIONS: list[tuple[str, ScrambleMode]] = [
-        ("Gen", ScrambleMode.GENERATE),
-        ("Input", ScrambleMode.INPUT),
+    SCRAMBLE_MODE_OPTIONS: list[tuple[ScrambleMode, ScrambleMode]] = [
+        (mode, mode) for mode in ScrambleMode
     ]
 
     SOLVE_EVENT_OPTIONS: list[tuple[str, int]] = [
