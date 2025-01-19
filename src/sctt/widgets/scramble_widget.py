@@ -71,7 +71,7 @@ class ScrambleDisplay(Static):
 
 
 class ScrambleWidget(Horizontal):
-    scramble: reactive[str] = reactive("", init=False)
+    scramble: reactive[str] = reactive("", init=False, always_update=True)
 
     class Changed(Message):
         def __init__(self, scramble: str, cube_size: int) -> None:
