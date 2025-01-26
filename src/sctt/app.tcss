@@ -39,7 +39,7 @@ MyDataTable {
 
     .datatable--header-hover {
         color: #0D0D0D;
-        background: #1a5e12;
+        background: gray;
     }
 
     .datatable--cursor {
