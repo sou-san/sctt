@@ -7,9 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a solve penalty feature.
+- Added 3x3x3 oh, 3x3x3 fm, 3x3x3 bld, 4x4x4 bld and 5x5x5 bld scramble feature.
+- Added solve statistics feature.
+- Added session feature.
+
+### Changed
+
+- Changed the scramble option display.
+
+### Removed
+
+- Removed unused fonts.
+
 ### Fixed
 
-- Fixed scramble user-input screen style.
+- Fixed the scramble user-input screen style.
 
 ## [0.2.1] - 2024-12-03
 
