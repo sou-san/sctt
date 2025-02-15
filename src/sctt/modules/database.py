@@ -169,7 +169,4 @@ class Database:
         with self._get_connection() as conn:
             mean: float | None = conn.execute(query, (session_id,)).fetchall()[0][0]
 
-            if mean is None:
-                return float("nan")
-            else:
-                return mean
+            return float("nan") if mean is None else mean
