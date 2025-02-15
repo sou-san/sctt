@@ -78,7 +78,8 @@ class Sctt(App[None]):
                 self.stats_widget = StatsWidget()
                 yield self.stats_widget
                 with Vertical():
-                    yield ScrambleWidget()
+                    self.scramble_widget = ScrambleWidget()
+                    yield self.scramble_widget
                     self.timer_widget = TimerWidget()
                     yield self.timer_widget
                     self.cube_net_widget = CubeNetWidget()
@@ -103,7 +104,7 @@ class Sctt(App[None]):
 
     @on(TimerWidget.Solved)
     def update_scramble(self) -> None:
-        self.query_one(ScrambleWidget).update()
+        self.scramble_widget.update()
 
     def save_solve(self) -> int | None:
         solve_id: int | None = self.db.add_solve(
@@ -139,12 +140,12 @@ class Sctt(App[None]):
         try:
             self.cube_net_widget.update_cube_net(
                 message.scramble,
-                self.query_one(ScrambleWidget).get_cube_size(message.solve_event),
+                self.scramble_widget.get_cube_size(message.solve_event),
             )
 
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
-            self.query_one(ScrambleWidget).set_inputted_scramble(None)
+            self.scramble_widget.set_inputted_scramble(None)
 
     @on(ScrambleWidget.Changed)
     def set_solve_buffer_scramble(self, message: ScrambleWidget.Changed) -> None:
