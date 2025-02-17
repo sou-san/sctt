@@ -10,11 +10,11 @@ requires-python = ">=3.12"
 license = { file = "LICENSE" }
 keywords = ["sctt", "speed cube timer", "scrambler", "cli", "tui", "terminal", "tool"]
 dependencies = [
-    "keyboard>=0.13.5",
-    "rich>=13.9.4",
-    "textual>=1.0.0",
-    "textual-pyfiglet>=0.5.5",
-    "xdg-base-dirs>=6.0.2",
+    "keyboard==0.13.5",
+    "rich>=13.9.4, <14.0.0",
+    "textual>=1.0.0, <2.0.0",
+    "textual-pyfiglet==0.5.5",
+    "xdg-base-dirs>=6.0.2, <7.0.0",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",

@@ -3211,11 +3211,11 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "keyboard", specifier = ">=0.13.5" },
-    { name = "rich", specifier = ">=13.9.4" },
-    { name = "textual", specifier = ">=1.0.0" },
-    { name = "textual-pyfiglet", specifier = ">=0.5.5" },
-    { name = "xdg-base-dirs", specifier = ">=6.0.2" },
+    { name = "keyboard", specifier = "==0.13.5" },
+    { name = "rich", specifier = ">=13.9.4,<14.0.0" },
+    { name = "textual", specifier = ">=1.0.0,<2.0.0" },
+    { name = "textual-pyfiglet", specifier = "==0.5.5" },
+    { name = "xdg-base-dirs", specifier = ">=6.0.2,<7.0.0" },
 ]
 
 [package.metadata.requires-dev]
