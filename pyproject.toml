@@ -1,6 +1,6 @@
 [project]
 name = "sctt"
-version = "0.3.0"
+version = "0.3.1"
 description = "SpeedCubeTimer-TUI (sctt)"
 readme = "README.md"
 authors = [
