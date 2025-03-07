@@ -24,8 +24,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 **It must be run as root to detect keyboard events.**
 
+When executed with root privileges, the owner of `__pycache__` becomes root, and root privileges are required for updates or uninstalls.
+To prevent this, compile in advance using the `--compile-bytecode` option so that the owner of `__pycache__` becomes a normal user.
+
 ```bash
-uv tool install sctt
+uv tool install --compile-bytecode sctt
 ```
 
 ```bash
@@ -35,7 +38,7 @@ sudo -E $(which sctt)
 or
 
 ```bash
-sudo -E $(which uvx) sctt
+sudo -E $(which uvx) -n sctt
 ```
 
 ### Windows
@@ -85,6 +88,10 @@ cd sctt
 ---
 
 ### Linux
+
+```bash
+uv sync --compile-bytecode
+```
 
 ```bash
 sudo -E $(which uv) run textual run --dev src/sctt/__main__.py
