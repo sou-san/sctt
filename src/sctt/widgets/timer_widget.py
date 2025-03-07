@@ -31,6 +31,11 @@ class TimerWidget(Static):
                 return_code=13,
                 message="You must be root to use sctt on linux.\n\nsudo -E $(which sctt)",
             )
+        except AssertionError:
+            self.app.exit(
+                return_code=1,
+                message="Sctt dose not support this environment.",
+            )
         else:
             self.set_interval(1 / 60, self.set_time)
 
