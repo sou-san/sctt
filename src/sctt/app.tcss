@@ -149,6 +149,7 @@ SolveScreen {
         align: center middle;
         width: 55%;
         height: auto;
+        min-width: 84;
         max-height: 25;
         padding: 1 2;
         border: round #0f0;
@@ -240,6 +241,7 @@ AOScreen {
     Vertical {
         width: 55%;
         height: auto;
+        min-width: 84;
         background: #0D0D0D;
         padding: 1 2;
         border: round #0f0;
