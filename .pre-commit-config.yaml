@@ -25,8 +25,9 @@ repos:
       args: [--config-file=pyproject.toml, src, tests]
       pass_filenames: false
       additional_dependencies: [
-        "keyboard>=0.13.5",
-        "rich>=13.9.4",
-        "textual>=0.88.1",
-        "textual-pyfiglet>=0.5.5",
+        "keyboard==0.13.5",
+        "rich>=13.9.4, <14.0.0",
+        "textual>=2.1.2, <3.0.0",
+        "textual-pyfiglet==0.5.5",
+        "xdg-base-dirs>=6.0.2, <7.0.0",
       ]
