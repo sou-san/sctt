@@ -112,6 +112,8 @@ class Database:
             return conn.execute(query, (id,)).fetchall()[0]
 
     def get_solve(self, session_id: int, solve_id: int) -> tuple[Any, ...]:
+        """Return a tuple of (id, event, time, penalty, scramble, date, session_id)."""
+
         query: str = "SELECT * FROM solves WHERE session_id = ? AND id = ?;"
 
         with self._get_connection() as conn:
