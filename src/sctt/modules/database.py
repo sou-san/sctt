@@ -104,6 +104,8 @@ class Database:
             self._update_session_updated_at(session_id, conn)
 
     def get_session(self, id: int) -> tuple[Any, ...]:
+        """Return a tuple of (id, name, created_at, updated_at)."""
+
         query: str = "SELECT * FROM sessions WHERE id = ?;"
 
         with self._get_connection() as conn:
