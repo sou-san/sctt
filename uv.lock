@@ -3155,15 +3155,15 @@ wheels = [
 
 [[package]]
 name = "rich"
-version = "13.9.4"
+version = "14.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown-it-py" },
     { name = "pygments" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz", hash = "sha256:439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098", size = 223149 }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/53/830aa4c3066a8ab0ae9a9955976fb770fe9c6102117c8ec4ab3ea62d89e8/rich-14.0.0.tar.gz", hash = "sha256:82f1bc23a6a21ebca4ae0c45af9bdbc492ed20231dcb63f297d6d1021a9d5725", size = 224078 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/19/71/39c7c0d87f8d4e6c020a393182060eaefeeae6c01dab6a84ec346f2567df/rich-13.9.4-py3-none-any.whl", hash = "sha256:6049d5e6ec054bf2779ab3358186963bac2ea89175919d699e378b99738c2a90", size = 242424 },
+    { url = "https://files.pythonhosted.org/packages/0d/9b/63f4c7ebc259242c89b3acafdb37b41d1185c07ff0011164674e9076b491/rich-14.0.0-py3-none-any.whl", hash = "sha256:1c9491e1951aac09caffd42f448ee3d04e58923ffe14993f6e83068dc395d7e0", size = 243229 },
 ]
 
 [[package]]
@@ -3215,8 +3215,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "keyboard", specifier = "==0.13.5" },
-    { name = "rich", specifier = ">=13.9.4,<14.0.0" },
-    { name = "textual", specifier = ">=2.1.2,<3.0.0" },
+    { name = "rich", specifier = ">=14.0.0,<15.0.0" },
+    { name = "textual", specifier = ">=3.0.1,<4.0.0" },
     { name = "textual-pyfiglet", specifier = "==0.5.5" },
     { name = "xdg-base-dirs", specifier = ">=6.0.2,<7.0.0" },
 ]
@@ -3232,7 +3232,7 @@ dev = [
 
 [[package]]
 name = "textual"
-version = "2.1.2"
+version = "3.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown-it-py", extra = ["linkify", "plugins"] },
@@ -3240,9 +3240,9 @@ dependencies = [
     { name = "rich" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/41/62/4af4689dd971ed4fb3215467624016d53550bff1df9ca02e7625eec07f8b/textual-2.1.2.tar.gz", hash = "sha256:aae3f9fde00c7440be00e3c3ac189e02d014f5298afdc32132f93480f9e09146", size = 1596600 }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/87/eda3ef12ac40b46a6d2930b89f19ffb1b8cde1ead8b24b0a31521eb8d2e6/textual-3.0.1.tar.gz", hash = "sha256:a5bfc924d63ceb16a4c63ce4ff4b424e5c554c4dfd71336450885c85dfc6247e", size = 1593717 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/07/81/9df1988c908cbba77f10fecb8587496b3dff2838d4510457877a521d87fd/textual-2.1.2-py3-none-any.whl", hash = "sha256:95f37f49e930838e721bba8612f62114d410a3019665b6142adabc14c2fb9611", size = 680148 },
+    { url = "https://files.pythonhosted.org/packages/49/57/6242ff473b0991055bbc7ab7e313dc6f1aa184c03326a252f1236162a875/textual-3.0.1-py3-none-any.whl", hash = "sha256:99daade46a3209c2f25a7ea210485192ebf8a3340108731c1a4600676f188619", size = 681772 },
 ]
 
 [[package]]
