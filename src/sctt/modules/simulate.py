@@ -1,6 +1,6 @@
 import copy
 import re
-from typing import Callable
+from collections.abc import Callable
 
 
 class Cube:

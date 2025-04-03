@@ -1,6 +1,6 @@
 import os
+from collections.abc import Generator
 from enum import Enum, auto
-from typing import Generator
 
 from rich.columns import Columns
 from rich.console import group

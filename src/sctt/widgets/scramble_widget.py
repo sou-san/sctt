@@ -1,5 +1,5 @@
+from collections.abc import Iterable
 from enum import StrEnum
-from typing import Iterable
 
 from rich.console import RenderableType
 from textual import on
