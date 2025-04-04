@@ -108,6 +108,8 @@ class Cube:
         return n > 0
 
     def initialize(self) -> None:
+        """キューブの状態をスクランブルが適用されていない状態に初期化する。"""
+
         self.faces: dict[str, list[list[str]]] = {
             "U": [["W"] * self.size for _ in range(self.size)],
             "L": [["O"] * self.size for _ in range(self.size)],
