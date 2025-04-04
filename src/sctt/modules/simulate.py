@@ -97,11 +97,15 @@ class Cube:
         """
 
         if self.is_natural_number(size):
-            self.size: int = size
+            self._size: int = size
         else:
             raise ValueError("size must be a natural number")
 
         self.initialize()
+
+    @property
+    def size(self) -> int:
+        return self._size
 
     @staticmethod
     def is_natural_number(n: int) -> bool:
@@ -111,12 +115,12 @@ class Cube:
         """キューブの状態をスクランブルが適用されていない状態に初期化する。"""
 
         self.faces: dict[str, list[list[str]]] = {
-            "U": [["W"] * self.size for _ in range(self.size)],
-            "L": [["O"] * self.size for _ in range(self.size)],
-            "F": [["G"] * self.size for _ in range(self.size)],
-            "R": [["R"] * self.size for _ in range(self.size)],
-            "B": [["B"] * self.size for _ in range(self.size)],
-            "D": [["Y"] * self.size for _ in range(self.size)],
+            "U": [["W"] * self._size for _ in range(self._size)],
+            "L": [["O"] * self._size for _ in range(self._size)],
+            "F": [["G"] * self._size for _ in range(self._size)],
+            "R": [["R"] * self._size for _ in range(self._size)],
+            "B": [["B"] * self._size for _ in range(self._size)],
+            "D": [["Y"] * self._size for _ in range(self._size)],
         }
 
     def _rotate_face_clockwise(self, face: str) -> None:
@@ -174,9 +178,9 @@ class Cube:
 
         # L 面の側面一列を時計回りにシフト
         for l_i in range(layers):
-            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self.size)]
+            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self._size)]
 
-            for s_i in range(self.size):
+            for s_i in range(self._size):
                 self.faces["U"][s_i][l_i] = self.faces["B"][(s_i + 1) * -1][(l_i + 1) * -1]
                 self.faces["B"][(s_i + 1) * -1][(l_i + 1) * -1] = self.faces["D"][s_i][l_i]
                 self.faces["D"][s_i][l_i] = self.faces["F"][s_i][l_i]
@@ -193,9 +197,9 @@ class Cube:
 
         # R 面の側面一列を時計回りにシフト
         for l_i in range(-1, (layers + 1) * -1, -1):
-            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self.size)]
+            tmp: list[str] = [self.faces["U"][s_i][l_i] for s_i in range(self._size)]
 
-            for s_i in range(self.size):
+            for s_i in range(self._size):
                 self.faces["U"][s_i][l_i] = self.faces["F"][s_i][l_i]
                 self.faces["F"][s_i][l_i] = self.faces["D"][s_i][l_i]
                 self.faces["D"][s_i][l_i] = self.faces["B"][(s_i + 1) * -1][l_i * -1 - 1]
@@ -217,7 +221,7 @@ class Cube:
 
         # F 面の側面一列を時計回りにシフト
         for l_i in range(layers):
-            for s_i in range(self.size):
+            for s_i in range(self._size):
                 # U 面の最下行 -> L 面の最右列（逆順）
                 new_u[(l_i + 1) * -1][s_i] = self.faces["L"][(s_i + 1) * -1][(l_i + 1) * -1]
                 # L 面の最右列 -> D 面の最上行
@@ -250,7 +254,7 @@ class Cube:
 
         # B 面の側面一列を時計回りにシフト
         for l_i in range(layers):
-            for s_i in range(self.size):
+            for s_i in range(self._size):
                 # U 面の最上行 -> R 面の最右列
                 new_u[l_i][s_i] = self.faces["R"][s_i][(l_i + 1) * -1]
                 # R 面の最右列 -> D 面の最下行(逆順)
