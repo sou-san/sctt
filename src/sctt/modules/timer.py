@@ -97,9 +97,9 @@ class Timer:
         h, m, s = Timer._convert_seconds_to_hms(seconds)
 
         if h:
-            return f"{h}:{m:02}:{s:0{3+decimal_places}.{decimal_places}f}"
+            return f"{h}:{m:02}:{s:0{3 + decimal_places}.{decimal_places}f}"
         elif m:
-            return f"{m}:{s:0{3+decimal_places}.{decimal_places}f}"
+            return f"{m}:{s:0{3 + decimal_places}.{decimal_places}f}"
         elif s:
             return f"{s:.{decimal_places}f}"
         else:
