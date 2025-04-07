@@ -49,9 +49,12 @@ class MySelect(Select[SelectType], inherit_bindings=False):
         options: Iterable[tuple[RenderableType, SelectType]],
         *,
         allow_blank: bool = True,
+        type_to_search: bool = False,
         id: str | None = None,
     ) -> None:
-        super().__init__(options=options, allow_blank=allow_blank, id=id)
+        super().__init__(
+            options=options, allow_blank=allow_blank, type_to_search=type_to_search, id=id
+        )
 
     def action_cursor_up(self) -> None:
         self.query_one(SelectOverlay).action_cursor_up()
