@@ -106,7 +106,7 @@ class Sctt(App[None]):
     def update_scramble(self) -> None:
         self.scramble_widget.update()
 
-    def save_solve(self) -> int | None:
+    def save_solve(self) -> None:
         solve_id: int | None = self.db.add_solve(
             self.solve_buffer.event,
             self.solve_buffer.time,
@@ -114,7 +114,8 @@ class Sctt(App[None]):
             self.solve_buffer.session_id,
         )
 
-        return solve_id
+        if solve_id is None:
+            raise ValueError("Failed to add solve to database.")
 
     def reset_solve_buffer(self) -> None:
         self.solve_buffer = SolveBuffer()
@@ -123,14 +124,10 @@ class Sctt(App[None]):
     @on(TimerWidget.Solved)
     def update_stats(self, message: TimerWidget.Solved) -> None:
         self.solve_buffer.time = message.time_
-        solve_id: int | None = self.save_solve()
-
-        if solve_id is None:
-            raise ValueError("Failed to add solve to database.")
-        else:
-            self.stats_widget.update(
-                self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
-            )
+        self.save_solve()
+        self.stats_widget.update(
+            self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
+        )
 
         save_last_session_id(self.solve_buffer.session_id)
         self.reset_solve_buffer()
