@@ -1,20 +1,16 @@
-from collections.abc import Iterable
 from enum import StrEnum
 
-from rich.console import RenderableType
 from textual import on
 from textual.app import ComposeResult
-from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.message import Message
 from textual.reactive import reactive
-from textual.types import SelectType
-from textual.widgets import Select, Static
-from textual.widgets._select import SelectOverlay
+from textual.widgets import Static
 
 from sctt.modules.scramble import generate_scramble
 from sctt.screens.input_scramble_screen import InputScrambleScreen
 from sctt.version import SCTT_VERSION
+from sctt.widgets.my_select import MySelect
 from sctt.widgets.my_vertical_scroll import MyVerticalScroll
 
 
@@ -35,32 +31,6 @@ class SolveEvent(StrEnum):
     THREE_BLD = "3x3x3 bld"  # Blindfolded
     FOUR_BLD = "4x4x4 bld"  # Blindfolded
     FIVE_BLD = "5x5x5 bld"  # Blindfolded
-
-
-class MySelect(Select[SelectType], inherit_bindings=False):
-    BINDINGS = [
-        Binding("enter", "show_overlay", "Show Overlay", show=False),
-        Binding("up,k", "cursor_up", "Cursor Up", show=False),
-        Binding("down,j", "cursor_down", "Cursor Down", show=False),
-    ]
-
-    def __init__(
-        self,
-        options: Iterable[tuple[RenderableType, SelectType]],
-        *,
-        allow_blank: bool = True,
-        type_to_search: bool = False,
-        id: str | None = None,
-    ) -> None:
-        super().__init__(
-            options=options, allow_blank=allow_blank, type_to_search=type_to_search, id=id
-        )
-
-    def action_cursor_up(self) -> None:
-        self.query_one(SelectOverlay).action_cursor_up()
-
-    def action_cursor_down(self) -> None:
-        self.query_one(SelectOverlay).action_cursor_down()
 
 
 class ScrambleSettingsSelect(Vertical):
