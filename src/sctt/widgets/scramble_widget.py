@@ -61,10 +61,6 @@ class ScrambleWidget(Horizontal):
 
     @staticmethod
     def get_cube_size(solve_event: SolveEvent) -> int:
-        """
-        Args: solve_event (str): 3x3x3 -> 3, 4x4x4 bld -> 4
-        """
-
         return int(solve_event[0])
 
     def compose(self) -> ComposeResult:
