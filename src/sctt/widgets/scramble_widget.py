@@ -76,22 +76,20 @@ class ScrambleWidget(Horizontal):
         self.query_one(ScrambleDisplay).update(scramble)
         self.post_message(self.Changed(scramble, self.solve_event))
 
-    def set_inputted_scramble(self, scramble: str | None) -> None:
-        if scramble is None:
-            self.query_one(MySelect[ScrambleMode]).set_options(
-                self.query_one(ScrambleSettingsSelect).SCRAMBLE_MODE_OPTIONS
-            )
-            self.scramble_mode = ScrambleMode.GENERATE
-            self.update()
-        else:
-            self.scramble = scramble.strip()
-
     def update(self) -> None:
+        def _check_scramble(scramble: str | None) -> None:
+            if scramble is None:
+                select = self.query_one(MySelect[ScrambleMode])
+                select.value = self.scramble_mode = ScrambleMode.GENERATE
+                self.update()
+            else:
+                self.scramble = scramble.strip()
+
         match self.scramble_mode:
             case ScrambleMode.GENERATE:
                 self.scramble = generate_scramble(self.get_cube_size(self.solve_event))
             case ScrambleMode.INPUT:
-                self.app.push_screen(InputScrambleScreen(), self.set_inputted_scramble)
+                self.app.push_screen(InputScrambleScreen(), _check_scramble)
 
     @on(MySelect.Changed)
     def handle_my_select_changed(self, event: MySelect.Changed) -> None:

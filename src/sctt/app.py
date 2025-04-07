@@ -145,7 +145,7 @@ class Sctt(App[None]):
 
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
-            self.scramble_widget.set_inputted_scramble(None)
+            self.scramble_widget.update()
 
     @on(ScrambleWidget.Changed)
     def set_solve_buffer_scramble(self, message: ScrambleWidget.Changed) -> None:
