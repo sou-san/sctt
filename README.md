@@ -104,6 +104,10 @@ sudo -E $(which uv) run textual run --dev src/sctt/__main__.py
 ### Windows
 
 ```powershell
+uv run pre-commit install
+```
+
+```powershell
 uv run textual run --dev .\src\sctt\__main__.py
 ```
 
