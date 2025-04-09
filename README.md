@@ -94,6 +94,10 @@ uv sync --compile-bytecode
 ```
 
 ```bash
+uv run pre-commit install
+```
+
+```bash
 sudo -E $(which uv) run textual run --dev src/sctt/__main__.py
 ```
 
