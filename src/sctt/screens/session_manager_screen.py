@@ -144,6 +144,9 @@ class SessionManagerScreen(ModalScreen[int]):
 
     @on(MyDataTable.RowSelected)
     def switch_session(self) -> None:
+        if self.session_id == self.current_session_id:
+            self.dismiss(None)
+
         self.dismiss(self.session_id)
 
     @on(MyDataTable.RowHighlighted)
