@@ -68,7 +68,11 @@ class TimerWidget(Static):
         self.update(time)
 
     def key_events(self, event: keyboard.KeyboardEvent) -> None:
-        if isinstance(self.app.screen, ModalScreen) or event.name != "space":
+        if (
+            isinstance(self.app.screen, ModalScreen)
+            or event.event_type is None
+            or event.name != "space"
+        ):
             return
 
         match event.event_type:
@@ -79,8 +83,6 @@ class TimerWidget(Static):
                 self.timer.on_press()
             case keyboard.KEY_UP:
                 self.timer.on_release()
-            case _:
-                pass
 
         match self.timer.state:
             case TimerState.STOPPED:
