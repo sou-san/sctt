@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import keyboard
 from rich.text import Text
 from textual import on
 from textual.app import App, ComposeResult
@@ -91,12 +90,6 @@ class Sctt(App[None]):
         self.stats_widget.update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
-
-    def on_app_focus(self) -> None:
-        keyboard.hook(self.timer_widget.key_events)
-
-    def on_app_blur(self) -> None:
-        keyboard.unhook_all()
 
     def on_resize(self, event: Resize) -> None:
         if event.size.width < MIN_WIDTH or event.size.height < MIN_HEIGHT:

@@ -25,7 +25,7 @@ class TimerWidget(Static):
 
     def on_mount(self) -> None:
         try:
-            keyboard.hook(self.key_events)
+            keyboard.hook(self._handle_key_events)
         except ImportError:
             self.app.exit(
                 return_code=13,
@@ -78,7 +78,7 @@ class TimerWidget(Static):
             case TimerState.RUNNING:
                 self.styles.color = "#fff 85%"
 
-    def key_events(self, event: keyboard.KeyboardEvent) -> None:
+    def _handle_key_events(self, event: keyboard.KeyboardEvent) -> None:
         if (
             isinstance(self.app.screen, ModalScreen)
             or event.event_type is None
@@ -96,3 +96,9 @@ class TimerWidget(Static):
                 self.timer.on_release()
 
         self._update_state_color()
+
+    def on_app_focus(self) -> None:
+        keyboard.hook(self._handle_key_events)
+
+    def on_app_blur(self) -> None:
+        keyboard.unhook_all()
