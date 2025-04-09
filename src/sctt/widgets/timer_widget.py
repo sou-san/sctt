@@ -67,6 +67,17 @@ class TimerWidget(Static):
     def watch_time(self, time: str) -> None:
         self.update(time)
 
+    def _update_state_color(self) -> None:
+        match self.timer.state:
+            case TimerState.STOPPED:
+                self.styles.color = "#fff 85%"
+            case TimerState.WAITING_FOR_START:
+                self.styles.color = "#f00 90%"
+            case TimerState.READY_TO_START:
+                self.styles.color = "#0f0 80%"
+            case TimerState.RUNNING:
+                self.styles.color = "#fff 85%"
+
     def key_events(self, event: keyboard.KeyboardEvent) -> None:
         if (
             isinstance(self.app.screen, ModalScreen)
@@ -84,12 +95,4 @@ class TimerWidget(Static):
             case keyboard.KEY_UP:
                 self.timer.on_release()
 
-        match self.timer.state:
-            case TimerState.STOPPED:
-                self.styles.color = "#fff 85%"
-            case TimerState.WAITING_FOR_START:
-                self.styles.color = "#f00 90%"
-            case TimerState.READY_TO_START:
-                self.styles.color = "#0f0 80%"
-            case TimerState.RUNNING:
-                self.styles.color = "#fff 85%"
+        self._update_state_color()
