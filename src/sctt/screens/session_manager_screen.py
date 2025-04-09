@@ -75,6 +75,8 @@ class SessionManagerScreen(ModalScreen[int]):
         for session in self.db.get_all_sessions():
             self.add_session_to_table(session)
 
+        table.move_cursor(row=table.get_row_index(str(self.current_session_id)))
+
     def add_session_to_table(self, session: tuple[Any, ...]) -> None:
         session_id, name, created_at, updated_at = session
         mean: float = self.db.calculate_solve_mean(session_id)
