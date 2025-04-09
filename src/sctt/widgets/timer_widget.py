@@ -21,7 +21,7 @@ class TimerWidget(Static):
     def __init__(self) -> None:
         super().__init__()
         self.font: Path = Path(__file__).parents[1] / "fonts" / "mono_banner"
-        self.timer = Timer()
+        self.timer: Timer = Timer()
 
     def on_mount(self) -> None:
         try:
