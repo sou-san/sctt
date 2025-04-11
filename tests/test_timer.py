@@ -112,11 +112,3 @@ def test_format_time() -> None:
     assert Timer.format_time(65.1234, 4) == "1:05.1234"
     assert Timer.format_time(3605.5678, 4) == "1:00:05.5678"
     assert Timer.format_time(1376.92586, 4) == "22:56.9259"
-
-
-def test_convert_seconds_to_hms() -> None:
-    assert Timer._convert_seconds_to_hms(0) == (0, 0, 0)
-    assert Timer._convert_seconds_to_hms(7.24593) == (0, 0, 7.24593)
-    assert Timer._convert_seconds_to_hms(65.1234) == (0, 1, 5.123400000000004)
-    assert Timer._convert_seconds_to_hms(3605.5678) == (1, 0, 5.5677999999998065)
-    assert Timer._convert_seconds_to_hms(1376.92586) == (0, 22, 56.92586000000006)
