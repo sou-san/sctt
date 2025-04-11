@@ -1,11 +1,11 @@
 * {
     scrollbar-size-vertical: 1;
-    scrollbar-background: #000;
-    scrollbar-background-active: #000;
-    scrollbar-background-hover: #000;
-    scrollbar-color: gray;
-    scrollbar-color-active: #0f0;
-    scrollbar-color-hover: #aaa;
+    scrollbar-background: #000000;
+    scrollbar-background-active: #000000;
+    scrollbar-background-hover: #000000;
+    scrollbar-color: #808080;
+    scrollbar-color-active: #00ff00;
+    scrollbar-color-hover: #aaaaaa;
 }
 
 Screen {
@@ -34,42 +34,42 @@ MyDataTable {
     .datatable--header {
         text-style: none;
         color: #0D0D0D;
-        background: gray;
+        background: #808080;
     }
 
     .datatable--header-hover {
         color: #0D0D0D;
-        background: gray;
+        background: #808080;
     }
 
     .datatable--cursor {
         text-style: none;
         color: #0D0D0D;
-        background: gray;
+        background: #808080;
     }
 
     .datatable--even-row {
-        background: #0f0 15%;
+        background: #00ff00 15%;
     }
 
     &:focus {
         background: #0D0D0D;
         background-tint: 0%;
-        border: round #0f0;
+        border: round #00ff00;
 
         .datatable--header {
             color: #0D0D0D;
-            background: #0f0;
+            background: #00ff00;
         }
 
         .datatable--header-hover {
             color: #0D0D0D;
-            background: #0f0;
+            background: #00ff00;
         }
 
         .datatable--cursor {
             color: #0D0D0D;
-            background: #0f0;
+            background: #00ff00;
         }
     }
 }
@@ -82,7 +82,7 @@ InputScrambleScreen {
         width: 60%;
         height: 50%;
         padding: 0 4;
-        border: round #0f0;
+        border: round #00ff00;
 
         Vertical {
             width: 1fr;
@@ -97,7 +97,7 @@ InputScrambleScreen {
                 margin: 1 0;
 
                 &:focus {
-                    border: round #0f0;
+                    border: round #00ff00;
                 }
             }
         }
@@ -121,7 +121,7 @@ DialogScreen {
         width: 40%;
         height: auto;
         padding: 2 4;
-        border: round #0f0;
+        border: round #00ff00;
 
         Label {
             text-align: center;
@@ -152,9 +152,9 @@ SolveScreen {
         min-width: 84;
         max-height: 25;
         padding: 1 2;
-        border: round #0f0;
+        border: round #00ff00;
         border-title-style: bold;
-        border-title-color: #fff 80%;
+        border-title-color: #ffffff 80%;
 
         SolveTime {
             width: auto;
@@ -196,7 +196,7 @@ SolveScreen {
                     border: round #1a5e12;
 
                     &:focus {
-                        border: round #0f0;
+                        border: round #00ff00;
                     }
                 }
             }
@@ -244,9 +244,9 @@ AOScreen {
         min-width: 84;
         background: #0D0D0D;
         padding: 1 2;
-        border: round #0f0;
+        border: round #00ff00;
         border-title-style: bold;
-        border-title-color: #fff 80%;
+        border-title-color: #ffffff 80%;
 
         MyDataTable {
             max-width: 100%;
@@ -266,7 +266,7 @@ InputSessionScreen {
         height: auto;
         background: #0D0D0D;
         padding: 1 2;
-        border: round #0f0;
+        border: round #00ff00;
 
         Label {
             text-align: center;
@@ -279,7 +279,7 @@ InputSessionScreen {
             width: 100%;
             height: auto;
             background: #0D0D0D;
-            border: round #0f0;
+            border: round #00ff00;
         }
     }
 }
@@ -292,9 +292,9 @@ SessionManagerScreen {
         height: auto;
         background: #0D0D0D;
         padding: 1 2;
-        border: round #0f0;
+        border: round #00ff00;
         border-title-style: bold;
-        border-title-color: #fff 80%;
+        border-title-color: #ffffff 80%;
 
         Label {
             width: auto;
@@ -320,7 +320,7 @@ StatsWidget {
     width: auto;
     height: 1fr;
     border-title-style: bold;
-    border-title-color: #fff 80%;
+    border-title-color: #ffffff 80%;
 }
 
 ScrambleWidget {
@@ -330,7 +330,7 @@ ScrambleWidget {
     VerticalScroll {
         border-title-align: right;
         border-title-style: bold;
-        border-title-color: #fff 80%;
+        border-title-color: #ffffff 80%;
     }
 
     ScrambleSettingsSelect {
@@ -354,32 +354,32 @@ ScrambleWidget {
                 padding: 0 1;
 
                 .arrow {
-                    color: #fff 70%;
+                    color: #ffffff 70%;
                 }
             }
 
             &:focus > SelectCurrent {
-                background: #0f0;
+                background: #00ff00;
 
                 Static#label {
-                    color: #000;
+                    color: #000000;
                 }
 
                 .arrow {
-                    color: #000;
+                    color: #000000;
                 }
             }
 
             SelectOverlay {
                 max-height: 13;
                 background: $background 10%;
-                border: round #0f0;
+                border: round #00ff00;
                 padding: 0;
 
                 &:focus > .option-list--option-highlighted {
                     text-style: none;
-                    color: #000;
-                    background: #0f0;
+                    color: #000000;
+                    background: #00ff00;
                 }
             }
         }
@@ -393,7 +393,7 @@ ScrambleWidget {
         border: round #1a5e12;
 
         &:focus {
-            border: round #0f0;
+            border: round #00ff00;
         }
 
         ScrambleDisplay {
@@ -420,7 +420,7 @@ CubeNetWidget {
     border: round #1a5e12;
 
     &:focus {
-        border: round #0f0;
+        border: round #00ff00;
     }
 
     CubeNetDisplay {
@@ -438,7 +438,7 @@ Footer {
         padding-left: 1;
 
         .footer-key--key {
-            color: #0f0;
+            color: #00ff00;
             background: $background 10%;
         }
     }
@@ -446,7 +446,7 @@ Footer {
 
 Toast {
     background: #0D0D0D;
-    border: round #0f0;
+    border: round #00ff00;
 }
 
 Button {
@@ -459,6 +459,6 @@ Button {
 
     &:focus {
         text-style: none;
-        border: round #0f0;
+        border: round #00ff00;
     }
 }
