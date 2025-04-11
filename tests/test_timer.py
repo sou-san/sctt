@@ -11,7 +11,7 @@ def test_initial_state() -> None:
     timer: Timer = Timer()
 
     assert timer.state == TimerState.STOPPED
-    assert timer.get_elapsed_time() == Timer.INIT_TIME
+    assert timer.elapsed_time == Timer.INIT_TIME
 
 
 def test_on_press_to_waiting_for_start(monkeypatch: MonkeyPatch) -> None:
@@ -71,9 +71,8 @@ def test_calculate_elapsed_time_running(monkeypatch: MonkeyPatch) -> None:
 
     # 5秒経過
     monkeypatch.setattr(time, "perf_counter", lambda: start_time + 5)
-    elapsed_time = timer.get_elapsed_time()
 
-    assert elapsed_time == 5.0
+    assert timer.elapsed_time == 5.0
 
 
 def test_calculate_elapsed_time_maximum(monkeypatch: MonkeyPatch) -> None:
@@ -87,9 +86,8 @@ def test_calculate_elapsed_time_maximum(monkeypatch: MonkeyPatch) -> None:
 
     # 最大値+10秒経過
     monkeypatch.setattr(time, "perf_counter", lambda: start_time + Timer.MAXIMUM_TIME + 10)
-    elapsed_time: float = timer.get_elapsed_time()
 
-    assert elapsed_time == Timer.MAXIMUM_TIME
+    assert timer.elapsed_time == Timer.MAXIMUM_TIME
 
 
 def test_format_time() -> None:

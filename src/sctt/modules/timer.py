@@ -65,7 +65,8 @@ class Timer:
     def _check_hold_duration(self) -> bool:
         return time.perf_counter() - self._press_time >= self.waiting_time
 
-    def get_elapsed_time(self) -> float:
+    @property
+    def elapsed_time(self) -> float:
         match self.state:
             case TimerState.STOPPED:
                 return self._elapsed_time

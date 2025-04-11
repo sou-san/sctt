@@ -51,7 +51,7 @@ class TimerWidget(Static):
             case _:
                 decimal_places = 2
 
-        formatted_time: str = Timer.format_time(self.timer.get_elapsed_time(), decimal_places)
+        formatted_time: str = Timer.format_time(self.timer.elapsed_time, decimal_places)
         styled_time: str = str(
             figlet_format(formatted_time, str(self.font), width=self.size.width)
         )
@@ -89,7 +89,7 @@ class TimerWidget(Static):
         match event.event_type:
             case keyboard.KEY_DOWN:
                 if self.timer.state == TimerState.RUNNING:
-                    self.post_message(self.Solved(self.timer.get_elapsed_time()))
+                    self.post_message(self.Solved(self.timer.elapsed_time))
 
                 self.timer.on_press()
             case keyboard.KEY_UP:
