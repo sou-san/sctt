@@ -74,20 +74,17 @@ class Sctt(App[None]):
     def compose(self) -> ComposeResult:
         with AppBody():
             with Horizontal():
-                self.stats_widget = StatsWidget()
-                yield self.stats_widget
+                yield StatsWidget()
                 with Vertical():
-                    self.scramble_widget = ScrambleWidget()
-                    yield self.scramble_widget
-                    self.timer_widget = TimerWidget()
-                    yield self.timer_widget
-                    self.cube_net_widget = CubeNetWidget()
-                    yield self.cube_net_widget
+                    yield ScrambleWidget()
+                    yield TimerWidget()
+                    yield CubeNetWidget()
             yield Footer()
 
     def on_mount(self) -> None:
-        self.stats_widget.border_title = self.db.get_session(self.solve_buffer.session_id)[1]
-        self.stats_widget.update(
+        stats_widget: StatsWidget = self.query_one(StatsWidget)
+        stats_widget.border_title = self.db.get_session(self.solve_buffer.session_id)[1]
+        stats_widget.update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
 
@@ -97,7 +94,7 @@ class Sctt(App[None]):
 
     @on(TimerWidget.Solved)
     def update_scramble(self) -> None:
-        self.scramble_widget.update()
+        self.query_one(ScrambleWidget).update()
 
     def save_solve(self) -> None:
         solve_id: int | None = self.db.add_solve(
@@ -118,7 +115,7 @@ class Sctt(App[None]):
     def update_stats(self, message: TimerWidget.Solved) -> None:
         self.solve_buffer.time = message.time_
         self.save_solve()
-        self.stats_widget.update(
+        self.query_one(StatsWidget).update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
 
@@ -127,15 +124,16 @@ class Sctt(App[None]):
 
     @on(ScrambleWidget.Changed)
     def update_cube_net(self, message: ScrambleWidget.Changed) -> None:
+        scramble_widget: ScrambleWidget = self.query_one(ScrambleWidget)
+        cube_net_widget: CubeNetWidget = self.query_one(CubeNetWidget)
+
         try:
-            self.cube_net_widget.cube_size = self.scramble_widget.get_cube_size(
-                message.solve_event
-            )
-            self.cube_net_widget.apply_scramble(message.scramble)
-            self.cube_net_widget.update()
+            cube_net_widget.cube_size = scramble_widget.get_cube_size(message.solve_event)
+            cube_net_widget.apply_scramble(message.scramble)
+            cube_net_widget.update()
         except ValueError:
             self.notify("[#ff0000][b]Error[/][/]\nInvalid scramble", severity="error")
-            self.scramble_widget.initialize()
+            scramble_widget.initialize()
 
     @on(ScrambleWidget.Changed)
     def set_solve_buffer_scramble(self, message: ScrambleWidget.Changed) -> None:
@@ -150,7 +148,7 @@ class Sctt(App[None]):
 
         if penalty != saved_penalty:
             self.db.change_solve_penalty(penalty, solve_id)
-            self.stats_widget.update(
+            self.query_one(StatsWidget).update(
                 self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
             )
 
@@ -167,7 +165,7 @@ class Sctt(App[None]):
                     session_id: int = self.solve_buffer.session_id
 
                     self.db.remove_solve(solve_id, session_id)
-                    self.stats_widget.update(
+                    self.query_one(StatsWidget).update(
                         self.db.get_solve_ids_and_times_and_penalties(session_id)
                     )
                 case _:
@@ -198,7 +196,7 @@ class Sctt(App[None]):
         else:
             raise ValueError("Invalid solve_id.")
 
-        cell_value: Text = self.stats_widget.get_cell(row_key, column_key)
+        cell_value: Text = self.query_one(StatsWidget).get_cell(row_key, column_key)
 
         if column_key == "time":
             self.show_solve_screen(solve_id)
@@ -215,10 +213,9 @@ class Sctt(App[None]):
                 save_last_session_id(session_id)
                 self.reset_solve_buffer()
                 self.query_one(TimerWidget).reset()
-                self.stats_widget.border_title = self.db.get_session(session_id)[1]
-                self.stats_widget.update(
-                    self.db.get_solve_ids_and_times_and_penalties(session_id)
-                )
+                stats_widget: StatsWidget = self.query_one(StatsWidget)
+                stats_widget.border_title = self.db.get_session(session_id)[1]
+                stats_widget.update(self.db.get_solve_ids_and_times_and_penalties(session_id))
                 self.update_scramble()
 
         self.push_screen(
