@@ -83,7 +83,8 @@ class Sctt(App[None]):
 
     def on_mount(self) -> None:
         stats_widget: StatsWidget = self.query_one(StatsWidget)
-        stats_widget.border_title = self.db.get_session(self.solve_buffer.session_id)[1]
+        session_name: str = self.db.get_session(self.solve_buffer.session_id)[1]
+        stats_widget.border_title = session_name
         stats_widget.update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
@@ -214,7 +215,8 @@ class Sctt(App[None]):
                 self.reset_solve_buffer()
                 self.query_one(TimerWidget).reset()
                 stats_widget: StatsWidget = self.query_one(StatsWidget)
-                stats_widget.border_title = self.db.get_session(session_id)[1]
+                session_name: str = self.db.get_session(session_id)[1]
+                stats_widget.border_title = session_name
                 stats_widget.update(self.db.get_solve_ids_and_times_and_penalties(session_id))
                 self.update_scramble()
 
