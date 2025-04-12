@@ -10,7 +10,7 @@ MIN_HEIGHT: int = 32
 
 
 class BlockingScreen(ModalScreen[None]):
-    BINDINGS = [Binding("q", "app.quit", "Exit")]
+    BINDINGS = [Binding("q", "app.quit", "Quit")]
 
     def compose(self) -> ComposeResult:
         width: int = self.app.size.width
