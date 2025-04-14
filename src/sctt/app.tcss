@@ -333,7 +333,6 @@ ScrambleWidget {
 
         #scramble_options {
             border-bottom: round #1a5e12;
-
         }
 
         MySelect {
@@ -376,7 +375,6 @@ ScrambleWidget {
                 }
             }
         }
-
    }
 
    MyVerticalScroll {
