@@ -16,6 +16,13 @@ class TimerWidget(Static):
             super().__init__()
             self.time_: float = time
 
+    STATE_CLASSES: dict[TimerState, str] = {
+        TimerState.STOPPED: "stopped",
+        TimerState.WAITING_FOR_START: "waiting-for-start",
+        TimerState.READY_TO_START: "ready-to-start",
+        TimerState.RUNNING: "running",
+    }
+
     time: reactive[str] = reactive("")
 
     def __init__(self) -> None:
@@ -68,15 +75,7 @@ class TimerWidget(Static):
         self.update(time)
 
     def _update_state_color(self) -> None:
-        match self.timer.state:
-            case TimerState.STOPPED:
-                self.styles.color = "#fff 85%"
-            case TimerState.WAITING_FOR_START:
-                self.styles.color = "#f00 90%"
-            case TimerState.READY_TO_START:
-                self.styles.color = "#0f0 80%"
-            case TimerState.RUNNING:
-                self.styles.color = "#fff 85%"
+        self.set_classes(self.STATE_CLASSES[self.timer.state])
 
     def _handle_key_events(self, event: keyboard.KeyboardEvent) -> None:
         if (

@@ -401,6 +401,22 @@ TimerWidget {
     border: round #1a5e12;
 }
 
+.stopped {
+    color: #ffffff 85%;
+}
+
+.waiting-for-start {
+    color: #ff0000 90%;
+}
+
+.ready-to-start {
+    color: #00ff00 80%;
+}
+
+.running {
+    color: #ffffff 85%;
+}
+
 CubeNetWidget {
     align: center middle;
     width: 1fr;
