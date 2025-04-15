@@ -17,20 +17,14 @@ class Timer:
 
     def __init__(self) -> None:
         self.waiting_time: float = 0.3
-        self.state: TimerState = TimerState.STOPPED
+        self.reset()
 
+    def reset(self) -> None:
         self._start_time: float = 0.0
         self._elapsed_time: float = 0.0
         self._press_time: float = 0.0
         self._was_key_released_after_stop: bool = False
-
-    def reset(self) -> None:
-        self.state = TimerState.STOPPED
-
-        self._start_time = 0.0
-        self._elapsed_time = 0.0
-        self._press_time = 0.0
-        self._was_key_released_after_stop = False
+        self.state: TimerState = TimerState.STOPPED
 
     def _check_hold_duration(self) -> bool:
         return time.perf_counter() - self._press_time >= self.waiting_time
