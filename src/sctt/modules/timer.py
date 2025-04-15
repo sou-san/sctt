@@ -46,20 +46,20 @@ class Timer:
             case TimerState.READY_TO_START:
                 pass
             case TimerState.RUNNING:
-                self.state = TimerState.STOPPED
                 self._was_key_released_after_stop = True
+                self.state = TimerState.STOPPED
 
     def on_release(self) -> None:
         match self.state:
             case TimerState.STOPPED:
                 self._was_key_released_after_stop = False
             case TimerState.WAITING_FOR_START:
-                self.state = TimerState.STOPPED
                 self._was_key_released_after_stop = False
+                self.state = TimerState.STOPPED
             case TimerState.READY_TO_START:
                 if not self._was_key_released_after_stop:
-                    self.state = TimerState.RUNNING
                     self._start_time = time.perf_counter()
+                    self.state = TimerState.RUNNING
                 else:
                     self.state = TimerState.STOPPED
             case TimerState.RUNNING:
