@@ -32,6 +32,9 @@ class Timer:
         self._press_time = 0.0
         self._was_key_released_after_stop = False
 
+    def _check_hold_duration(self) -> bool:
+        return time.perf_counter() - self._press_time >= self.waiting_time
+
     def on_press(self) -> None:
         match self.state:
             case TimerState.STOPPED:
@@ -61,9 +64,6 @@ class Timer:
                     self.state = TimerState.STOPPED
             case TimerState.RUNNING:
                 pass
-
-    def _check_hold_duration(self) -> bool:
-        return time.perf_counter() - self._press_time >= self.waiting_time
 
     @property
     def elapsed_time(self) -> float:
