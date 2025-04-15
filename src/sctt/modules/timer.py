@@ -68,9 +68,7 @@ class Timer:
     @property
     def elapsed_time(self) -> float:
         match self.state:
-            case TimerState.STOPPED:
-                return self._elapsed_time
-            case TimerState.WAITING_FOR_START:
+            case TimerState.STOPPED | TimerState.WAITING_FOR_START:
                 return self._elapsed_time
             case TimerState.READY_TO_START:
                 return self.INIT_TIME
