@@ -30,3 +30,11 @@ class MyVerticalScroll(VerticalScroll):
     | ctrl+pageup | Scroll left one page, if horizontal scrolling is available. |
     | ctrl+pagedown | Scroll right one page, if horizontal scrolling is available. |
     """
+
+    @property
+    def can_focus(self) -> bool:
+        return self.show_vertical_scrollbar
+
+    @can_focus.setter
+    def can_focus(self, flag: bool) -> None:
+        self.can_focus = flag
