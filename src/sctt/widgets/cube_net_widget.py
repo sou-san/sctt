@@ -25,6 +25,14 @@ class CubeNetWidget(MyScrollableContainer):
     def cube_size(self, cube_size: int) -> None:
         self._cube_net = CubeNet(cube_size)
 
+    @property
+    def can_focus(self) -> bool:
+        return self.show_vertical_scrollbar or self.show_horizontal_scrollbar
+
+    @can_focus.setter
+    def can_focus(self, flag: bool) -> None:
+        self.can_focus = flag
+
     def update(self) -> None:
         self._cube_net.sticker_size = StickerSize.NORMAL
 
