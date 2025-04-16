@@ -2,10 +2,9 @@ from pathlib import Path
 
 import keyboard
 from textual.message import Message
-from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Static
-from textual_pyfiglet.pyfiglet import CharNotPrinted, figlet_format
+from textual_pyfiglet.pyfiglet import figlet_format
 
 from sctt.modules.timer import Timer, TimerState
 
@@ -22,8 +21,6 @@ class TimerWidget(Static):
         TimerState.READY_TO_START: "ready-to-start",
         TimerState.RUNNING: "running",
     }
-
-    time: reactive[str] = reactive("")
 
     def __init__(self) -> None:
         super().__init__()
@@ -44,7 +41,10 @@ class TimerWidget(Static):
                 message="Sctt dose not support this environment.",
             )
         else:
-            self.set_interval(1 / 60, self.set_time)
+            self.interval_timer = self.set_interval(1 / 60, self.update_time, pause=True)
+
+    def on_resize(self) -> None:
+        self.update_time()
 
     def reset(self) -> None:
         self.timer.reset()
@@ -64,15 +64,8 @@ class TimerWidget(Static):
         )
         return styled_time.strip("\n")
 
-    def set_time(self) -> None:
-        try:
-            self.time = self.style_time()
-        except CharNotPrinted:
-            # 起動時に self.size.width の値が 0 になる場合にアプリが落ちるのを防ぐ。
-            pass
-
-    def watch_time(self, time: str) -> None:
-        self.update(time)
+    def update_time(self) -> None:
+        self.update(self.style_time())
 
     def _update_state_color(self) -> None:
         self.set_classes(self.STATE_CLASSES[self.timer.state])
@@ -95,6 +88,13 @@ class TimerWidget(Static):
                 self.timer.on_release()
 
         self._update_state_color()
+
+        match self.timer.state:
+            case TimerState.RUNNING:
+                self.interval_timer.resume()
+            case _:
+                self.interval_timer.pause()
+                self.update_time()
 
     def on_app_focus(self) -> None:
         keyboard.hook(self._handle_key_events)
