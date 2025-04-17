@@ -55,6 +55,7 @@ def test_add_solve(db: Database) -> None:
     assert solve_id is not None, "ソルブが正常に追加されるべき"
 
     solves: list[tuple[Any, ...]] = db.get_all_solves(session_id)
+    session_updated_at = db.get_session(session_id)[3]
 
     assert len(solves) == 1, "ソルブは1つだけ存在するべき"
 
@@ -63,6 +64,7 @@ def test_add_solve(db: Database) -> None:
     assert solves[0][2] == 12.34, "ソルブのタイムが一致するべき"
     assert solves[0][3] == "dnf", "ソルブのペナルティが一致するべき"
     assert solves[0][4] == "D2 R2 U2", "ソルブのスクランブルが一致するべき"
+    assert solves[0][5] == session_updated_at, "ソルブとセッションの更新日時が一致するべき"
     assert solves[0][6] == session_id, "ソルブのセッションIDが一致するべき"
 
 
