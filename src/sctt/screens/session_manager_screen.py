@@ -13,6 +13,7 @@ from textual.widgets.data_table import RowDoesNotExist
 from sctt.modules.database import Database
 from sctt.modules.timer import Timer
 from sctt.screens.dialog_screen import DialogScreen
+from sctt.utils import convert_utc_to_local
 from sctt.widgets.my_datatable import MyDataTable
 
 
@@ -88,8 +89,8 @@ class SessionManagerScreen(ModalScreen[int]):
                 "-" if isnan(mean) else Timer.format_time(mean, 2),
                 justify="center",
             ),
-            Text(created_at, justify="center"),
-            Text(updated_at, justify="center"),
+            Text(convert_utc_to_local(created_at), justify="center"),
+            Text(convert_utc_to_local(updated_at), justify="center"),
             key=str(session_id),
         )
 
