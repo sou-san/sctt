@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed cube net not resizing when screen size is changed.
+- Fixed the display of the created_at and updated_at columns in the session manager table.
 
 ### Changed
 
