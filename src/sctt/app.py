@@ -21,7 +21,7 @@ from sctt.widgets.stats_widget import StatsWidget
 from sctt.widgets.timer_widget import TimerWidget
 
 
-def get_last_session_id() -> int:
+def get_cached_last_opened_session_id() -> int:
     with open(get_cache_file(), "r") as f:
         return int(f.readline())
 
@@ -67,7 +67,7 @@ class Sctt(App[None]):
             else:
                 save_last_session_id(session_id)
         else:
-            session_id = get_last_session_id()
+            session_id = get_cached_last_opened_session_id()
 
         self.solve_buffer.session_id = session_id
 
@@ -110,7 +110,7 @@ class Sctt(App[None]):
 
     def reset_solve_buffer(self) -> None:
         self.solve_buffer = SolveBuffer()
-        self.solve_buffer.session_id = get_last_session_id()
+        self.solve_buffer.session_id = get_cached_last_opened_session_id()
 
     @on(TimerWidget.Solved)
     def update_stats(self, message: TimerWidget.Solved) -> None:
