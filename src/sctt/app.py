@@ -26,7 +26,7 @@ def get_cached_last_opened_session_id() -> int:
         return int(f.readline())
 
 
-def save_last_session_id(session_id: int) -> None:
+def cache_last_opened_session_id(session_id: int) -> None:
     with open(get_cache_file(), "w") as f:
         f.write(str(session_id))
 
@@ -65,7 +65,7 @@ class Sctt(App[None]):
             if session_id is None:
                 raise ValueError("Failed to create session.")
             else:
-                save_last_session_id(session_id)
+                cache_last_opened_session_id(session_id)
         else:
             session_id = get_cached_last_opened_session_id()
 
@@ -120,7 +120,7 @@ class Sctt(App[None]):
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
 
-        save_last_session_id(self.solve_buffer.session_id)
+        cache_last_opened_session_id(self.solve_buffer.session_id)
         self.reset_solve_buffer()
 
     @on(ScrambleWidget.Changed)
@@ -211,7 +211,7 @@ class Sctt(App[None]):
             if result is not None:
                 session_id: int = result
 
-                save_last_session_id(session_id)
+                cache_last_opened_session_id(session_id)
                 self.reset_solve_buffer()
                 self.query_one(TimerWidget).reset()
                 stats_widget: StatsWidget = self.query_one(StatsWidget)
