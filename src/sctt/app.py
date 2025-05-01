@@ -119,8 +119,6 @@ class Sctt(App[None]):
         self.query_one(StatsWidget).update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
-
-        cache_last_opened_session_id(self.solve_buffer.session_id)
         self.reset_solve_buffer()
 
     @on(ScrambleWidget.Changed)
