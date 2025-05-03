@@ -9,7 +9,7 @@ from textual.events import Resize
 from textual.widgets import Footer
 
 from sctt.locations import get_cache_file
-from sctt.modules.database import Database
+from sctt.modules.database import Database, SessionNotFoundError
 from sctt.screens.ao_screen import AOScreen
 from sctt.screens.blocking_screen import MIN_HEIGHT, MIN_WIDTH, BlockingScreen
 from sctt.screens.session_manager_screen import SessionManagerScreen
@@ -83,7 +83,12 @@ class Sctt(App[None]):
 
     def on_mount(self) -> None:
         stats_widget: StatsWidget = self.query_one(StatsWidget)
-        session_name: str = self.db.get_session(self.solve_buffer.session_id)[1]
+
+        try:
+            session_name: str = self.db.get_session(self.solve_buffer.session_id)[1]
+        except SessionNotFoundError:
+            self.solve_buffer.session_id, session_name, _, _ = self.db.get_last_session()
+
         stats_widget.border_title = session_name
         stats_widget.update(
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)

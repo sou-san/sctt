@@ -3,6 +3,10 @@ from pathlib import Path
 from typing import Any
 
 
+class SessionNotFoundError(Exception):
+    pass
+
+
 class Database:
     """データベースを管理するクラス
 
@@ -109,7 +113,21 @@ class Database:
         query: str = "SELECT * FROM sessions WHERE id = ?;"
 
         with self._get_connection() as conn:
-            return conn.execute(query, (id,)).fetchall()[0]
+            if (session := conn.execute(query, (id,)).fetchone()) is not None:
+                return session
+            else:
+                raise SessionNotFoundError
+
+    def get_last_session(self) -> tuple[Any, ...]:
+        """Return a tuple of (id, name, created_at, updated_at)."""
+
+        query: str = "SELECT * FROM sessions ORDER BY updated_at DESC LIMIT 1;"
+
+        with self._get_connection() as conn:
+            if (session := conn.execute(query).fetchone()) is not None:
+                return session
+            else:
+                raise SessionNotFoundError
 
     def get_solve(self, session_id: int, solve_id: int) -> tuple[Any, ...]:
         """Return a tuple of (id, event, time, penalty, scramble, date, session_id)."""
