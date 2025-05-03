@@ -190,12 +190,12 @@ class Database:
         query: str = "SELECT COUNT(*) FROM solves WHERE session_id = ?;"
 
         with self._get_connection() as conn:
-            return conn.execute(query, (session_id,)).fetchall()[0][0]
+            return conn.execute(query, (session_id,)).fetchone()[0]
 
     def calculate_solve_mean(self, session_id: int) -> float:
         query: str = "SELECT AVG(time) FROM solves WHERE session_id = ?;"
 
         with self._get_connection() as conn:
-            mean: float | None = conn.execute(query, (session_id,)).fetchall()[0][0]
+            mean: float | None = conn.execute(query, (session_id,)).fetchone()[0]
 
             return float("nan") if mean is None else mean
