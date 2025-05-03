@@ -7,6 +7,10 @@ class SessionNotFoundError(Exception):
     pass
 
 
+class SolveNotFoundError(Exception):
+    pass
+
+
 class Database:
     """データベースを管理するクラス
 
@@ -135,7 +139,10 @@ class Database:
         query: str = "SELECT * FROM solves WHERE session_id = ? AND id = ?;"
 
         with self._get_connection() as conn:
-            return conn.execute(query, (session_id, solve_id)).fetchall()[0]
+            if (solve := conn.execute(query, (session_id, solve_id)).fetchone()) is not None:
+                return solve
+            else:
+                raise SolveNotFoundError
 
     def get_all_sessions(self) -> list[tuple[Any, ...]]:
         query: str = "SELECT * FROM sessions;"
