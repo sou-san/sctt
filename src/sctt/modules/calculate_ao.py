@@ -1,10 +1,6 @@
 import math
 
 
-def my_round(x: float, decimals: int = 0) -> float:
-    return float(math.floor(x * 10**decimals + 0.5) / 10**decimals)
-
-
 def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
     """ペナルティを考慮してソルブをソートする関数
 
@@ -50,4 +46,4 @@ def calculate_ao(solves: list[tuple[float, str]], n: int) -> float | str:
         return "DNF"
 
     times: list[float] = [solve[0] for solve in trimmed_window]
-    return my_round(sum(times), 2) / my_round(len(trimmed_window), 2)
+    return sum(times) / len(trimmed_window)

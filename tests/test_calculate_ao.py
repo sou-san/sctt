@@ -1,12 +1,6 @@
 import math
 
-from sctt.modules.calculate_ao import calculate_ao, my_round
-
-
-def test_my_round() -> None:
-    assert my_round(12.783, 2) == 12.78
-    assert my_round(13.865, 2) == 13.87
-    assert my_round(35.0493072839, 5) == 35.04931
+from sctt.modules.calculate_ao import calculate_ao
 
 
 def test_calculate_ao_no_solves() -> None:
@@ -192,7 +186,6 @@ def test_calculate_ao_100() -> None:
 
 
 if __name__ == "__main__":
-    test_my_round()
     test_calculate_ao_no_solves()
     test_calculate_ao_5()
     test_calculate_ao_12()
