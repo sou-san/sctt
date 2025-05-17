@@ -22,7 +22,7 @@ def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
             case "dnf":
                 dnf_solves.append(solve)
             case _:
-                pass
+                raise ValueError(f"Invalid penalty: {solve[1]}")
 
     valid_solves.sort()
     dnf_solves.sort()
