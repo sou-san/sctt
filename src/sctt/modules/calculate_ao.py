@@ -14,15 +14,17 @@ def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
     dnf_solves: list[tuple[float, str]] = []
 
     for solve in solves:
-        match solve[1]:
+        time, penalty = solve
+
+        match penalty:
             case "":
                 valid_solves.append(solve)
             case "plus_2":
-                valid_solves.append((solve[0] + 2, solve[1]))
+                valid_solves.append((time + 2, penalty))
             case "dnf":
                 dnf_solves.append(solve)
             case _:
-                raise ValueError(f"Invalid penalty: {solve[1]}")
+                raise ValueError(f"Invalid penalty: {penalty}")
 
     valid_solves.sort()
     dnf_solves.sort()
