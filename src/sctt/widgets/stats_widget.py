@@ -1,4 +1,5 @@
 import math
+from collections.abc import Iterable, Sequence
 from typing import Any
 
 from rich.text import Text
@@ -20,6 +21,25 @@ class StatsWidget(MyDataTable[Text]):
         self.add_column("ao12", key="ao12")
 
     @staticmethod
+    def _format_times(solves: Sequence[tuple[int, float, str]]) -> list[str]:
+        result: list[str] = []
+
+        for solve in solves:
+            _, time, penalty = solve
+
+            match penalty:
+                case "":
+                    result.append(Timer.format_time(time, 2))
+                case "plus_2":
+                    result.append(f"{Timer.format_time(time + 2, 2)}+")
+                case "dnf":
+                    result.append("DNF")
+                case _:
+                    raise ValueError(f"Invalid penalty: {penalty}")
+
+        return result
+
+    @staticmethod
     def _format_ao_values(solves: list[tuple[Any, ...]], n: int) -> list[str]:
         result: list[str] = []
 
@@ -39,21 +59,8 @@ class StatsWidget(MyDataTable[Text]):
     def update(self, solves: list[tuple[Any, ...]]) -> None:
         self.clear()
 
-        times: list[str] = []
-
-        for solve in solves:
-            match solve[2]:
-                case "":
-                    times.append(Timer.format_time(solve[1], 2))
-                case "plus_2":
-                    times.append(f"{Timer.format_time(solve[1] + 2, 2)}+")
-                case "dnf":
-                    times.append("DNF")
-                case _:
-                    raise ValueError(f"Invalid penalty: {solve[2]}")
-
         num_solves: list[int] = list(reversed(range(1, len(solves) + 1)))
-        times = list(reversed(times))
+        times: Iterable[str] = reversed(self._format_times(solves))
         ao5_results: list[str] = list(reversed(self._format_ao_values(solves, 5)))
         ao12_results: list[str] = list(reversed(self._format_ao_values(solves, 12)))
         solve_ids: list[str] = list(reversed([str(solve[0]) for solve in solves]))
