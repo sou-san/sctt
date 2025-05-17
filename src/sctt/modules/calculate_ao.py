@@ -1,8 +1,9 @@
+import functools
 import math
 from collections.abc import Iterator
 
 
-def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
+def _sort_solves(solves: tuple[tuple[float, str], ...]) -> list[tuple[float, str]]:
     """ペナルティを考慮してソルブをソートする関数
 
     ペナルティが +2 の場合は 2 を足してソートされる。
@@ -32,7 +33,8 @@ def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
     return valid_solves + dnf_solves
 
 
-def calculate_ao(solves: list[tuple[float, str]], n: int) -> float | str:
+@functools.lru_cache(maxsize=10_000)
+def calculate_ao(solves: tuple[tuple[float, str]], n: int) -> float | str:
     if len(solves) != n:
         return float("nan")
 

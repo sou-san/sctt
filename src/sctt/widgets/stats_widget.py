@@ -44,7 +44,9 @@ class StatsWidget(MyDataTable[Text]):
         result: list[str] = []
 
         for i in range(1, len(solves) + 1):
-            ao_value: float | str = calculate_ao([solve[1:] for solve in solves[i - n : i]], n)
+            ao_value: float | str = calculate_ao(
+                tuple(solve[1:] for solve in solves[i - n : i]), n
+            )
 
             if isinstance(ao_value, float):
                 if math.isnan(ao_value):
@@ -75,3 +77,13 @@ class StatsWidget(MyDataTable[Text]):
                 Text(ao12, justify="center"),
                 key=solve_id,
             )
+
+        # cache_info = calculate_ao.cache_info()
+        # hit_rate = (
+        #     cache_info.hits / total * 100
+        #     if (total := (cache_info.hits + cache_info.misses))
+        #     else 0.0
+        # )
+        # self.log.debug(
+        #     f"calculate_ao() cache info: {cache_info}, cache hit rate: {hit_rate:.2f}%"
+        # )

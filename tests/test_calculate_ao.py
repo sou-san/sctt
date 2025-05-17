@@ -4,7 +4,7 @@ from sctt.modules.calculate_ao import calculate_ao
 
 
 def test_calculate_ao_no_solves() -> None:
-    result: float | str = calculate_ao([], 5)
+    result: float | str = calculate_ao((), 5)
 
     if isinstance(result, float):
         assert math.isnan(result)
@@ -13,22 +13,22 @@ def test_calculate_ao_no_solves() -> None:
 
 
 def test_calculate_ao_5() -> None:
-    solves: list[tuple[float, str]]
+    solves: tuple[tuple[float, str], ...]
 
-    solves = [(15.91, ""), (16.71, ""), (10.31, ""), (19.38, ""), (19.51, "")]
+    solves = ((15.91, ""), (16.71, ""), (10.31, ""), (19.38, ""), (19.51, ""))
     assert calculate_ao(solves, 5) == 17.333333333333332
 
-    solves = [(15.91, "plus_2"), (16.71, ""), (10.31, "plus_2"), (19.38, ""), (19.51, "")]
+    solves = ((15.91, "plus_2"), (16.71, ""), (10.31, "plus_2"), (19.38, ""), (19.51, ""))
     assert calculate_ao(solves, 5) == 18.0
 
-    solves = [(15.91, "dnf"), (16.71, ""), (10.31, "dnf"), (19.38, ""), (19.51, "")]
+    solves = ((15.91, "dnf"), (16.71, ""), (10.31, "dnf"), (19.38, ""), (19.51, ""))
     assert calculate_ao(solves, 5) == "DNF"
 
 
 def test_calculate_ao_12() -> None:
-    solves: list[tuple[float, str]]
+    solves: tuple[tuple[float, str], ...]
 
-    solves = [
+    solves = (
         (15.91, ""),
         (16.71, ""),
         (10.31, ""),  #
@@ -41,10 +41,10 @@ def test_calculate_ao_12() -> None:
         (18.14, ""),
         (16.01, ""),
         (11.34, ""),
-    ]
+    )
     assert calculate_ao(solves, 12) == 15.563999999999998
 
-    solves = [
+    solves = (
         (15.91, "plus_2"),
         (16.71, "plus_2"),
         (10.31, "plus_2"),  #
@@ -57,10 +57,10 @@ def test_calculate_ao_12() -> None:
         (18.14, ""),
         (16.01, ""),
         (11.34, "plus_2"),
-    ]
+    )
     assert calculate_ao(solves, 12) == 16.377000000000002
 
-    solves = [
+    solves = (
         (15.91, ""),
         (16.71, ""),
         (10.31, ""),
@@ -73,14 +73,14 @@ def test_calculate_ao_12() -> None:
         (18.14, ""),
         (16.01, ""),
         (11.34, "dnf"),
-    ]
+    )
     assert calculate_ao(solves, 12) == "DNF"
 
 
 def test_calculate_ao_100() -> None:
-    solves: list[tuple[float, str]]
+    solves: tuple[tuple[float, str], ...]
 
-    solves = [
+    solves = (
         (11.51, ""),
         (14.47, ""),
         (14.05, ""),
@@ -181,7 +181,7 @@ def test_calculate_ao_100() -> None:
         (13.58, ""),
         (17.51, ""),
         (14.70, ""),
-    ]
+    )
     assert calculate_ao(solves, 100) == 15.601444444444446
 
 
