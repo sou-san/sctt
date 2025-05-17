@@ -1,4 +1,5 @@
 import math
+from collections.abc import Iterator
 
 
 def _sort_solves(solves: list[tuple[float, str]]) -> list[tuple[float, str]]:
@@ -45,5 +46,5 @@ def calculate_ao(solves: list[tuple[float, str]], n: int) -> float | str:
     if trimmed_window[-1][1] == "dnf":
         return "DNF"
 
-    times: list[float] = [solve[0] for solve in trimmed_window]
+    times: Iterator[float] = (solve[0] for solve in trimmed_window)
     return sum(times) / len(trimmed_window)
