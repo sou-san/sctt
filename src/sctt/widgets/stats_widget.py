@@ -59,17 +59,17 @@ class StatsWidget(MyDataTable[Text]):
     def update(self, solves: list[tuple[Any, ...]]) -> None:
         self.clear()
 
-        num_solves: list[int] = list(reversed(range(1, len(solves) + 1)))
+        num_solves: Iterable[str] = map(str, range(len(solves), 0, -1))
         times: Iterable[str] = reversed(self._format_times(solves))
-        ao5_results: list[str] = list(reversed(self._format_ao_values(solves, 5)))
-        ao12_results: list[str] = list(reversed(self._format_ao_values(solves, 12)))
-        solve_ids: list[str] = list(reversed([str(solve[0]) for solve in solves]))
+        ao5_results: Iterable[str] = reversed(self._format_ao_values(solves, 5))
+        ao12_results: Iterable[str] = reversed(self._format_ao_values(solves, 12))
+        solve_ids: Iterable[str] = (str(solve[0]) for solve in reversed(solves))
 
         for num_solve, time, ao5, ao12, solve_id in zip(
             num_solves, times, ao5_results, ao12_results, solve_ids, strict=True
         ):
             self.add_row(
-                Text(str(num_solve), justify="center"),
+                Text(num_solve, justify="center"),
                 Text(time, justify="center"),
                 Text(ao5, justify="center"),
                 Text(ao12, justify="center"),
