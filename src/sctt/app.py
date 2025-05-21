@@ -94,6 +94,12 @@ class Sctt(App[None]):
             self.db.get_solve_ids_and_times_and_penalties(self.solve_buffer.session_id)
         )
 
+    def on_app_focus(self) -> None:
+        self.query_one(TimerWidget).start_key_detection()
+
+    def on_app_blur(self) -> None:
+        self.query_one(TimerWidget).stop_key_detection()
+
     def on_resize(self, event: Resize) -> None:
         if event.size.width < MIN_WIDTH or event.size.height < MIN_HEIGHT:
             self.push_screen(BlockingScreen())
