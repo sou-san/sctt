@@ -96,7 +96,7 @@ class TimerWidget(Static):
                 self.interval_timer.pause()
                 self.update_time()
 
-    def on_app_focus(self) -> None:
+    def start_key_detection(self) -> None:
         keyboard.hook(self._handle_key_events)
 
     def on_app_blur(self) -> None:
