@@ -99,5 +99,5 @@ class TimerWidget(Static):
     def start_key_detection(self) -> None:
         keyboard.hook(self._handle_key_events)
 
-    def on_app_blur(self) -> None:
+    def stop_key_detection(self) -> None:
         keyboard.unhook_all()
