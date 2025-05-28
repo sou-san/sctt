@@ -10,10 +10,10 @@ from sctt.widgets.my_datatable import MyDataTable
 
 
 class StatsWidget(MyDataTable[Text]):
-    def on_mount(self) -> None:
-        self.cursor_type = "cell"
-        self.zebra_stripes = True
+    def __init__(self) -> None:
+        super().__init__(cursor_type="cell", zebra_stripes=True)
 
+    def on_mount(self) -> None:
         # header
         self.add_column("no.", key="no.")
         self.add_column("time", key="time")
