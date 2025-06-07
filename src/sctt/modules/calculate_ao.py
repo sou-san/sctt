@@ -4,7 +4,7 @@ from collections.abc import Iterator
 
 
 def _sort_solves(solves: tuple[tuple[float, str], ...]) -> list[tuple[float, str]]:
-    """ペナルティを考慮してソルブをソートする関数
+    """ペナルティを考慮してソルブをソートする。
 
     ペナルティが +2 の場合は 2 を足してソートされる。
     ペナルティが DNF の場合は最遅のソルブとしてソートされ、
