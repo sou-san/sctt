@@ -6,9 +6,9 @@ from collections.abc import Iterator
 def _sort_solves(solves: tuple[tuple[float, str], ...]) -> list[tuple[float, str]]:
     """ペナルティを考慮してソルブをソートする。
 
-    ペナルティが +2 の場合は 2 を足してソートされる。
-    ペナルティが DNF の場合は最遅のソルブとしてソートされ、
-    DNF が複数ある場合は、それらのタイムがさらにソートされる。
+    ペナルティが plus_2 の場合は 2 を足してソートされる。
+    ペナルティが dnf の場合は最も遅いソルブとしてソートされる。
+    dnf が複数ある場合は、それらのタイムがさらにソートされる。
     """
 
     valid_solves: list[tuple[float, str]] = []
