@@ -1,6 +1,4 @@
-import math
 from collections.abc import Iterable, Sequence
-from typing import Any
 
 from rich.text import Text
 
@@ -40,31 +38,34 @@ class StatsWidget(MyDataTable[Text]):
         return result
 
     @staticmethod
-    def _format_ao_values(solves: list[tuple[Any, ...]], n: int) -> list[str]:
+    def _format_ao_values(solves: Sequence[tuple[float, str]], n: int) -> list[str]:
         result: list[str] = []
 
         for i in range(1, len(solves) + 1):
-            ao_value: float | str = calculate_ao(
-                tuple(solve[1:] for solve in solves[i - n : i]), n
-            )
+            window: Sequence[tuple[float, str]] = solves[i - n : i]
 
-            if isinstance(ao_value, float):
-                if math.isnan(ao_value):
-                    result.append("-")
-                else:
+            if len(window) == n:
+                ao_value: float | str = calculate_ao(window)
+
+                if isinstance(ao_value, float):
                     result.append(Timer.format_time(ao_value, 2))
+                else:
+                    result.append(ao_value)
             else:
-                result.append(str(ao_value))
+                result.append("-")
 
         return result
 
-    def update(self, solves: list[tuple[Any, ...]]) -> None:
+    def update(self, solves: Sequence[tuple[int, float, str]]) -> None:
         self.clear()
 
         num_solves: Iterable[str] = map(str, range(len(solves), 0, -1))
         times: Iterable[str] = reversed(self._format_times(solves))
-        ao5_results: Iterable[str] = reversed(self._format_ao_values(solves, 5))
-        ao12_results: Iterable[str] = reversed(self._format_ao_values(solves, 12))
+        _solves: tuple[tuple[float, str], ...] = tuple(
+            (time, penalty) for _, time, penalty in solves
+        )
+        ao5_results: Iterable[str] = reversed(self._format_ao_values(_solves, 5))
+        ao12_results: Iterable[str] = reversed(self._format_ao_values(_solves, 12))
         solve_ids: Iterable[str] = (str(solve[0]) for solve in reversed(solves))
 
         for num_solve, time, ao5, ao12, solve_id in zip(

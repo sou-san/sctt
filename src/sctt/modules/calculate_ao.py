@@ -1,14 +1,18 @@
 import functools
 import math
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
+from typing import Literal
 
 
-def _sort_solves(solves: tuple[tuple[float, str], ...]) -> list[tuple[float, str]]:
+def _sort_solves(solves: Sequence[tuple[float, str]]) -> list[tuple[float, str]]:
     """ペナルティを考慮してソルブをソートする。
 
     ペナルティが plus_2 の場合は 2 を足してソートされる。
     ペナルティが dnf の場合は最も遅いソルブとしてソートされる。
     dnf が複数ある場合は、それらのタイムがさらにソートされる。
+
+    Args:
+        solves (Sequence[tuple[float, str]]): タイムとペナルティを要素に持つタプルを要素に持つシーケンス。(ペナルティ: "" | "plus_2" | "dnf")
     """
 
     valid_solves: list[tuple[float, str]] = []
@@ -34,21 +38,23 @@ def _sort_solves(solves: tuple[tuple[float, str], ...]) -> list[tuple[float, str
 
 
 @functools.lru_cache(maxsize=10_000)
-def calculate_ao(solves: tuple[tuple[float, str]], n: int) -> float | str:
-    if len(solves) != n:
+def calculate_ao(solves: Sequence[tuple[float, str]]) -> float | Literal["DNF"]:
+    """Average of N を計算する。 (N は solves の個数)
+
+    Args:
+        solves (Sequence[tuple[float, str]]): タイムとペナルティを要素に持つタプルを要素に持つシーケンス。(ペナルティ: "" | "plus_2" | "dnf")
+    """
+
+    if (n := len(solves)) <= 2:
         return float("nan")
 
     trim_count: int = int(math.ceil(n * 0.05))
-    sorted_window: list[tuple[float, str]] = _sort_solves(solves)
-    trimmed_window: list[tuple[float, str]] = sorted_window[
-        trim_count : len(solves) - trim_count
-    ]
+    sorted_solves: list[tuple[float, str]] = _sort_solves(solves)
+    trimmed_solves: list[tuple[float, str]] = sorted_solves[trim_count : n - trim_count]
 
-    if len(trimmed_window) < max(0, n - (trim_count * 2)):
-        return float("nan")
-
-    if trimmed_window[-1][1] == "dnf":
+    # ペナルティを考慮してソートしたあと、トリムするから最も遅いソルブのペナルティが dnf なら ao N の値も DNF になる。
+    if trimmed_solves[-1][-1] == "dnf":
         return "DNF"
 
-    times: Iterator[float] = (solve[0] for solve in trimmed_window)
-    return sum(times) / len(trimmed_window)
+    times: Iterator[float] = (time for time, _ in trimmed_solves)
+    return sum(times) / len(trimmed_solves)
